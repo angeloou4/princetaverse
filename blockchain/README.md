@@ -1,0 +1,12 @@
+- Running on truffle / ganache
+    - Startup up Ganache and make sure to connect to truffle-config.js of this project
+    - Run `truffle compile`, `truffle migrate`, then `truffle console` to enter the console
+    - See bottom of [https://trufflesuite.com/docs/truffle/quickstart.html#alternative-migrating-with-ganache](https://trufflesuite.com/docs/truffle/quickstart.html#alternative-migrating-with-ganache) for commands that can be run in console
+- Deploying to Ropsten
+    - Tutorial: [https://medium.com/coinmonks/5-minute-guide-to-deploying-smart-contracts-with-truffle-and-ropsten-b3e30d5ee1e](https://medium.com/coinmonks/5-minute-guide-to-deploying-smart-contracts-with-truffle-and-ropsten-b3e30d5ee1e)
+    - Get the 12 words from the crypto wallet you want to connect from and put those words into the truffle-config.js file
+    - Put the Infura id for the in the truffle-config.js file
+    - `truffle compile`
+    - `truffle migrate --network ropsten`
+    - `truffle deploy --network ropsten`
+    - `truffle console --network ropsten`
