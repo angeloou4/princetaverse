@@ -10,6 +10,11 @@
       "StackName": "amplify-princetaverse-dev-150624",
       "StackId": "arn:aws:cloudformation:us-east-1:287177205468:stack/amplify-princetaverse-dev-150624/aae05e60-b125-11ec-b5e5-0adec8a6997d",
       "AmplifyAppId": "d3c3p6pytpzg7o"
+    },
+    "categories": {
+      "auth": {
+        "princetaverse41b91800": {}
+      }
     }
   }
 }
