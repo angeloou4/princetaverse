@@ -1,22 +1,22 @@
-var HDWalletProvider = require("truffle-hdwallet-provider");
-const MNEMONIC = "crypto wallet words";
+var HDWalletProvider = require('truffle-hdwallet-provider')
+let { METAMASK_WORDS, INFURA_ID } = require('../secrets')
 
 module.exports = {
   compilers: {
     solc: {
-      version: "0.8.0"
+      version: '0.8.0'
     }
   },
   networks: {
     development: {
-      host: "127.0.0.1", 
+      host: '127.0.0.1', 
       port: 7545, 
-      network_id: "*"
+      network_id: '*'
     }, 
     ropsten: {
-      provider: () => new HDWalletProvider(MNEMONIC, "https://ropsten.infura.io/v3/INFURA_ID"),
+      provider: () => new HDWalletProvider(METAMASK_WORDS, `https://ropsten.infura.io/v3/${INFURA_ID}`),
       network_id: 3, 
       gas: 4000000
     }, 
   }
-};
+}
