@@ -1,10 +1,10 @@
 var HDWalletProvider = require('truffle-hdwallet-provider')
-let { METAMASK_WORDS, INFURA_ID } = require('../secrets')
+let { METAMASK_WORDS, API_URL } = require('../secrets')
 
 module.exports = {
   compilers: {
     solc: {
-      version: '0.8.0'
+      version: '0.8.1'
     }
   },
   networks: {
@@ -14,7 +14,7 @@ module.exports = {
       network_id: '*'
     }, 
     ropsten: {
-      provider: () => new HDWalletProvider(METAMASK_WORDS, `https://ropsten.infura.io/v3/${INFURA_ID}`),
+      provider: () => new HDWalletProvider(METAMASK_WORDS, API_URL),
       network_id: 3, 
       gas: 4000000
     }, 
