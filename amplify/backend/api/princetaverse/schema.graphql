@@ -1,0 +1,28 @@
+type Bookmark @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  user: User @hasOne
+  asset: NFT @hasOne
+}
+
+type Transaction @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  seller: User @hasOne
+  buyer: User @hasOne
+  asset: NFT @hasOne
+  amount: String
+}
+
+type NFT @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  price: String
+  owner: String
+  address: String
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  firstName: String
+  lastName: String
+  email: AWSEmail
+}
