@@ -8,7 +8,7 @@ const contract = require('../build/contracts/PrincetonNFT.json')
 const contractAddress = '0x4F4e34beAdB6568f066858f1F8335BD453e080D4' // Address of PrincetonNFT contract
 const nftContract = new web3.eth.Contract(contract.abi, contractAddress)
 
-async function mintNFT(tokenURI) {
+const mintNFT = async tokenURI => {
   const nonce = await web3.eth.getTransactionCount(PUBLIC_KEY, 'latest')
 
   // Create transaction
@@ -30,3 +30,5 @@ async function mintNFT(tokenURI) {
 
 let TOKEN_URI_ADDRESS = 'ipfs://JSON_METADATA_HASH_HERE'
 mintNFT(TOKEN_URI_ADDRESS)
+
+exports.mintNFT = mintNFT
