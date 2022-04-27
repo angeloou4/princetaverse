@@ -37,6 +37,8 @@ export declare class User {
   readonly firstName?: string | null;
   readonly lastName?: string | null;
   readonly email?: string | null;
+  readonly address?: string | null;
+  readonly privateKey?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<User, UserMetaData>);
