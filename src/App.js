@@ -1,11 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
 import MenuBar from './Components/MenuBar'
 import Map from './Components/Map'
+import Landing from './Components/Landing'
+import Login from './Components/Login'
 import nassau from './images/nassau.jpg'
 import blair from './images/blair.jpg'
 import firestone from './images/firestone.jpg'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  Routes,
+  Route, 
+} from "react-router-dom";
+
 
 function App() {
 
@@ -35,10 +41,19 @@ function App() {
   ]
 
   return (
+
     <div className="App">
-      <MenuBar/>
-      <Map buildings={buildings}/>
+
+      <MenuBar />
+
+      <Routes>
+        <Route path="/" element={<Landing />}/>
+        <Route path="/map" element={<Map buildings={buildings}/>}/>
+        <Route path='/login' element={<Login />} />
+      </Routes>
+      
     </div>
+
   );
 }
 
