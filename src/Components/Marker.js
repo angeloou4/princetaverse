@@ -13,6 +13,9 @@ const Marker = ({details, index, showBuilding}) => {
 		mouseover() {
 			if (markerRef) markerRef.current.openPopup();
 		},
+		click() {
+			showBuilding(index)
+		}
 		// mouseout() {
 		// 	if (markerRef) markerRef.current.closePopup();
 		// }
@@ -22,7 +25,8 @@ const Marker = ({details, index, showBuilding}) => {
 	return (
 		<MyMarker position={coordinates}
 			ref={markerRef}
-			eventHandlers={eventHandlers}>
+			eventHandlers={eventHandlers}
+			>
 			<Popup >
 				{/* todo: fix alignment */}
 				{/* todo: center map on pin when hovered over */}

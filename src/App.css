@@ -55,3 +55,6 @@
 .button:hover {
   color: #004ed5
 }
+.MuiSpeedDial-fab{
+  color: gray
+}
