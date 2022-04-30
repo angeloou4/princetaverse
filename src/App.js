@@ -17,6 +17,7 @@ import {
 } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { Auth } from "aws-amplify"
+import { Hub } from 'aws-amplify'
 
 import { Amplify } from 'aws-amplify';
 // import { withAuthenticator } from '@aws-amplify/ui-react';
@@ -88,18 +89,29 @@ function App() {
     },
   ]
 
-
+  const listener = (data) => {
+      switch (data.payload.event) {
+          case 'signIn':
+              setLogged(true)
+              console.log('user signed in');
+              break;
+          case 'signOut':
+              setLogged(false)
+              console.log('user signed out');
+              break;
+      }
+  }
+  Hub.listen('auth', listener)
 
   return (
 
     <div className="App">
 
-      <MenuBar />
+      <MenuBar logged={logged} setLogged={(bool) => setLogged(bool)} />
 
       <Routes>
-        <Route path="/" element={<Landing />}/>
-        <Route path="/map" element={<Map buildings={buildings} />}/>
-        <Route path='/login' element={<Login />} />
+        <Route path="/" element={<Map buildings={buildings} />}/>
+        <Route path='/login' element={<Login setLogged={(bool) => setLogged(bool)} />} />
         <Route path='/profile/:id' element={<Profile buildings={buildings} isLoggedInUser={true}/>}/>
       </Routes>
       

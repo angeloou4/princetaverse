@@ -5,17 +5,14 @@ import Divider from '@mui/material/Divider';
 import BuildingDetails from './BuildingDetails'
 import BuyDialogContent from "./BuyDialogContent";
 import SellDialogContent from "./SellDialogContent";
-import {
-	useParams
-  } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 
 const Profile = ({ buildings, isLoggedInUser=false, user = {
 	name: "Chris Eisgruber",
 	address: "0x474EdC23535767f479f519a581b5FDB7Ff4c1310",
 } }) => {
 
-	const {id} = useParams()
+	const { id } = useParams()
 	// TODO: fetch buildings, user info from backend using userID
 	// TODO: if id==logged-in-user, fetch using logged in user's ID
 	const [selectedBuilding, setSelectedBuilding] = useState(buildings[0])
