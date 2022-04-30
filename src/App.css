@@ -1,5 +1,15 @@
+html, body, #app, #app>div {
+  height: 100%
+}
+
 .App {
   text-align: center;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .App-logo {
@@ -48,13 +58,25 @@
   min-height: 100px
 }
 
-.button:active {
-  color: #0040af
+.action-button:active {
+  background-color: #0040af
 }
 
-.button:hover {
-  color: #004ed5
+.action-button:hover {
+  background-color: #004ed5
 }
 .MuiSpeedDial-fab{
-  color: gray
+  background-color: gray
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+a:link{
+  text-decoration: none;
 }

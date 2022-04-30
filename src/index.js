@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter style={{height: "100%"}}>
     <App />
   </BrowserRouter>,
   document.getElementById('root')

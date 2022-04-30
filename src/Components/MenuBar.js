@@ -12,9 +12,9 @@ function MenuBar() {
 				<Link to='/' style={{fontSize: 30, color: "white"}} className="nav-link">The Princetaverse</Link>
 			</div>
 			<Nav className="me-auto"></Nav>
-
-			<Link to='/' style={{ fontSize: 30, color: "white" }} className="nav-link" >Map</Link>
-{/* {logged ? this : else} */}
+			{/* TODO: display link only if user is logged in */}
+			<Link to='/map' style={{ fontSize: 30, color: "white" }} className="nav-link" >Map</Link>
+			<Link to='/profile/logged-in-user' style={{ fontSize: 30, color: "white" }} className="nav-link" >Profile</Link>
 			<div style={{ marginRight: 15, float: "right" }}>
 				<Link to='/login' style={{ fontSize: 30, color: "white" }} className="nav-link" >Login</Link>
 			</div>

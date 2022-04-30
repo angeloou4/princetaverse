@@ -10,9 +10,9 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 const drawerWidth = 700;
 
 
-const Sidebar = ({content, open, setOpen}) => {
+const Sidebar = ({ content, open, setOpen, marginTop="77px", height}) => {
   const theme = useTheme();
-  
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -30,11 +30,12 @@ const Sidebar = ({content, open, setOpen}) => {
     ...theme.mixins.toolbar,
     justifyContent: 'flex-start',
   }));
-  
+
 
   return (
     <div>
       <Drawer
+        PaperProps={{ style: { height: height, marginTop: marginTop } }}
         variant="persistent"
         open={open}
         sx={{
@@ -46,12 +47,14 @@ const Sidebar = ({content, open, setOpen}) => {
         }}
       >
         {/* just for padding lol */}
-        <div style={{height: "120px"}}></div> 
-        <DrawerHeader>
-          <IconButton onClick={() => handleDrawerClose()}>
-          <ChevronLeftIcon />
-          </IconButton> 
-        </DrawerHeader>
+        {/* <div style={{ height: "120px" }}></div> */}
+
+        {setOpen &&
+          <DrawerHeader>
+            <IconButton onClick={() => handleDrawerClose()}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </DrawerHeader>}
         {content}
       </Drawer>
     </div>
