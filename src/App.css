@@ -41,3 +41,20 @@
   width: 100wh; 
   height: 100vh;
 }
+
+/* shit doesn't work */
+.MuiToolbar-root {
+  height: 100px;
+  min-height: 100px
+}
+
+.button:active {
+  color: #0040af
+}
+
+.button:hover {
+  color: #004ed5
+}
+.MuiSpeedDial-fab{
+  color: gray
+}

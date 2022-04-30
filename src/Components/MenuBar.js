@@ -6,16 +6,16 @@ import { Link } from "react-router-dom";
 function MenuBar() {
 	return (
 		
-		<NavBar fixed="top" expand="lg" bg="dark" variant="dark">
+		<NavBar fixed="top" expand="lg" bg="dark" variant="dark" style={{zIndex: 2000}}>
 			<div style={{ marginLeft: 15 }}>
-				<Link to='/' style={{fontSize: 30}} className="nav-link">The Princetaverse</Link>
+				<Link to='/' style={{fontSize: 30, color: "white"}} className="nav-link">The Princetaverse</Link>
 			</div>
 			<Nav className="me-auto"></Nav>
 
-			<Link to='/map' style={{ fontSize: 30 }} className="nav-link" >Map</Link>
+			<Link to='/map' style={{ fontSize: 30, color: "white" }} className="nav-link" >Map</Link>
 
 			<div style={{ marginRight: 15, float: "right" }}>
-				<Link to='/login' style={{ fontSize: 30 }} className="nav-link" >Login</Link>
+				<Link to='/login' style={{ fontSize: 30, color: "white" }} className="nav-link" >Login</Link>
 			</div>
 
 		</NavBar>
