@@ -14,16 +14,26 @@ import {
   Routes,
   Route, 
 } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { Auth } from "aws-amplify"
 
 import { Amplify } from 'aws-amplify';
-
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import '@aws-amplify/ui-react/styles.css';
-
+// import { withAuthenticator } from '@aws-amplify/ui-react';
+// import '@aws-amplify/ui-react/styles.css';
 import awsExports from './aws-exports';
 Amplify.configure(awsExports);
 
 function App() {
+
+  const [logged, setLogged] = useState(false)
+
+	useEffect(() => {
+		Auth.currentAuthenticatedUser()
+			.then(user => {
+        setLogged(true)
+      })
+			.catch(err => setLogged( false ));
+	});
 
   // dummy data
   const buildings = [
@@ -78,9 +88,8 @@ function App() {
       <MenuBar />
 
       <Routes>
-        <Route path="/" element={<Landing />}/>
-        <Route path="/map" element={<Map buildings={buildings} />}/>
-        <Route path='/login' element={<Login />} />
+        <Route path="/" element={<Map buildings={buildings} />}/>
+        <Route path='/login' element={<Login />} setLogged={setLogged} />
       </Routes>
       
     </div>
@@ -88,4 +97,4 @@ function App() {
   );
 }
 
-export default withAuthenticator(App);
+export default App;
