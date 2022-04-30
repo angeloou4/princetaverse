@@ -37,7 +37,7 @@ const Marker = ({details, index, showBuilding}) => {
 					<h1 style={{textDecoration: "underline"}}>{title}</h1>
 					<h2>${price}</h2>
 					{/* maybe eventually replace with link to profile page */}
-					<h5>Currently owned by <a>{current_owner}</a></h5>
+					<h5>Currently owned by <a href={"/profile/" + current_owner.id}>{current_owner.name}</a></h5>
 					<h4 onClick={()=> {showBuilding(index)}} style={{color: "#0000EE", cursor: "pointer"}}>view</h4>
 				</div>
 			</Popup>

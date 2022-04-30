@@ -76,3 +76,7 @@ html, body, #app, #app>div {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+
+a:link{
+  text-decoration: none;
+}
