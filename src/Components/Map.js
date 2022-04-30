@@ -1,13 +1,14 @@
-import React, { useRef, useMemo, useEffect, useState } from "react";
+import React, {useState } from "react";
 import { MapContainer } from 'react-leaflet/MapContainer'
 import { TileLayer } from 'react-leaflet/TileLayer'
 import Marker from "./Marker"
 import Sidebar from './Sidebar'
 import BuildingList from './BuildingList'
-import BuildingPurchase from './BuildingPurchase'
+import BuildingDetails from './BuildingDetails'
 import FloatingIconButton from './FloatingIconButton'
 import 'leaflet/dist/leaflet.css';
-
+import BuyDialogContent from "./BuyDialogContent";
+import SellDialogContent from "./SellDialogContent";
 
 import L from 'leaflet';
 
@@ -26,10 +27,11 @@ const Map = ({ buildings }) => {
 	const [isListSidebarOpen, setIsListSidebarOpen] = React.useState(false);
 	const [selectedBuilding, setSelectedBuilding] = useState(buildings[0])
 	const showBuilding = (key) => {
-		console.log(buildings[key])
 		setSelectedBuilding(buildings[key])
 		setIsBuildingSidebarOpen(true)
 	}
+	// TODO: update this variable based on if selectedBuilding is owned by currently logged in user
+	const loggedInUserOwnsNFT = false
 
 	return (
 		<div style={{ "height": "100%", "width": "100%" }}>
@@ -37,6 +39,8 @@ const Map = ({ buildings }) => {
 			<Sidebar
 				open={isListSidebarOpen}
 				setOpen={setIsListSidebarOpen}
+				height={"calc(100% - 77px)"}
+				marginTop={"calc(77px)"}
 				content=
 				{
 					<BuildingList
@@ -49,8 +53,13 @@ const Map = ({ buildings }) => {
 				open={isBuildingSidebarOpen}
 				setOpen={setIsBuildingSidebarOpen}
 				content={
-					<BuildingPurchase
+					<BuildingDetails
 						building={selectedBuilding}
+						buying = {loggedInUserOwnsNFT ? false : true}
+						dialogContent={
+							loggedInUserOwnsNFT ?
+							<SellDialogContent building={selectedBuilding}/>
+							: <BuyDialogContent building={selectedBuilding}/>}
 					/>
 				} />
 			<MapContainer center={[40.347402699984606, -74.65859686137848]} zoom={17.5} scrollWheelZoom={true}>

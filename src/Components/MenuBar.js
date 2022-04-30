@@ -11,7 +11,7 @@ function MenuBar() {
 				<Link to='/' style={{fontSize: 30, color: "white"}} className="nav-link">The Princetaverse</Link>
 			</div>
 			<Nav className="me-auto"></Nav>
-
+			<Link to='/profile' style={{ fontSize: 30, color: "white" }} className="nav-link" >Profile</Link>
 			<Link to='/map' style={{ fontSize: 30, color: "white" }} className="nav-link" >Map</Link>
 
 			<div style={{ marginRight: 15, float: "right" }}>

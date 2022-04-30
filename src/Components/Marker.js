@@ -5,7 +5,7 @@ import { Popup } from 'react-leaflet/Popup'
 
 const Marker = ({details, index, showBuilding}) => {
 // coordinates is an object, title is a string, image is a URL, price is a number
-	const {title, coordinates, image, price, current_owner} = details
+	const {title, coordinates, image, price, current_owner, address} = details
 	const markerRef = useRef();
 
 	const eventHandlers = useMemo(
