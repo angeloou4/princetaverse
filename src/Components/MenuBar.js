@@ -11,8 +11,12 @@ function MenuBar({ logged, setLogged }) {
 	)
 
 	useEffect(() => {
-		console.log(logged)
 		if (logged) {
+			const handleSignOut = () => {
+				Auth.signOut()
+				setLogged(false)
+			}
+
 			setRightButton(
 				<button type="button" class="btn btn-link text-decoration-none" onClick={handleSignOut} style={{ fontSize: 30, color: "white" }} >
 					Sign out
@@ -23,12 +27,7 @@ function MenuBar({ logged, setLogged }) {
 				<Link to='/login' style={{ fontSize: 30, color: "white" }} className="nav-link">Login</Link>
 			)
 		}
-	}, [logged])
-
-	const handleSignOut = () => {
-		Auth.signOut()
-		setLogged(false)
-	}
+	}, [logged, setLogged])
 
 	return (
 		
@@ -39,6 +38,8 @@ function MenuBar({ logged, setLogged }) {
 			<Nav className="me-auto"></Nav>
 
 			<Link to='/' style={{ fontSize: 30, color: "white" }} className="nav-link" >Map</Link>
+			
+			{/* Profile */}
 			{
 				logged ? (
 					<Link to='/profile/logged-in-user' style={{ fontSize: 30, color: "white" }} className="nav-link" >Profile</Link>

@@ -16,14 +16,15 @@ import {
   Route, 
 } from "react-router-dom";
 import { useEffect, useState } from 'react';
-import { Auth } from "aws-amplify"
-import { Hub } from 'aws-amplify'
-
-import { Amplify } from 'aws-amplify';
-// import { withAuthenticator } from '@aws-amplify/ui-react';
-// import '@aws-amplify/ui-react/styles.css';
+import { Amplify, Auth, Hub, API, graphqlOperation } from 'aws-amplify';
+import * as mutations from './graphql/mutations'
+import * as queries from './graphql/queries'
 import awsExports from './aws-exports';
+// import { API_URL, PUBLIC_KEY, PRIVATE_KEY } from './secrets'
+// import { createAlchemyWeb3 } from '@alch/alchemy-web3'
+
 Amplify.configure(awsExports);
+// const web3 = createAlchemyWeb3(API_URL)
 
 function App() {
 
@@ -89,15 +90,55 @@ function App() {
     },
   ]
 
-  const listener = (data) => {
+  const listener = async (data) => {
       switch (data.payload.event) {
           case 'signIn':
               setLogged(true)
-              console.log('user signed in');
+              break;
+          case 'signUp':
+              setLogged(true)
+              
+              const COIN_AMOUNT = 1000
+              
+              // Make new Eth account
+
+              // let newAcc = web3.eth.accounts.create()
+              // let { address, privateKey } = newAcc
+
+              // Give the user coins
+
+
+
+              // Add user to database
+              
+              let userInfo = await Auth.currentUserInfo()
+              let email = userInfo.attributes.email
+
+              const existingUsers = await API.graphql(graphqlOperation(queries.listUsers))
+              const allUsers = existingUsers.data.listUsers.items
+              const sameUsers = allUsers.filter(user => user.email === email)
+
+              // Don't add user if already exists
+              if (sameUsers.length > 0) return
+              
+              const userDetails = {
+                email: email, 
+                address: 'test', 
+                privateKey: 'test',
+                coins: COIN_AMOUNT
+              }
+              
+              const newUser = await API.graphql({ 
+                query: mutations.createUser, 
+                variables: {input: userDetails }
+              })
+
               break;
           case 'signOut':
               setLogged(false)
               console.log('user signed out');
+              break;
+          default: 
               break;
       }
   }
