@@ -5,36 +5,13 @@ export const onCreateBookmark = /* GraphQL */ `
   subscription OnCreateBookmark {
     onCreateBookmark {
       id
-      user {
-        id
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      asset {
-        id
-        name
-        price
-        owner
-        address
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
+      user
+      asset
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      bookmarkUserId
-      bookmarkAssetId
     }
   }
 `;
@@ -42,36 +19,13 @@ export const onUpdateBookmark = /* GraphQL */ `
   subscription OnUpdateBookmark {
     onUpdateBookmark {
       id
-      user {
-        id
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      asset {
-        id
-        name
-        price
-        owner
-        address
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
+      user
+      asset
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      bookmarkUserId
-      bookmarkAssetId
     }
   }
 `;
@@ -79,36 +33,13 @@ export const onDeleteBookmark = /* GraphQL */ `
   subscription OnDeleteBookmark {
     onDeleteBookmark {
       id
-      user {
-        id
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      asset {
-        id
-        name
-        price
-        owner
-        address
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
+      user
+      asset
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      bookmarkUserId
-      bookmarkAssetId
     }
   }
 `;
@@ -116,49 +47,15 @@ export const onCreateTransaction = /* GraphQL */ `
   subscription OnCreateTransaction {
     onCreateTransaction {
       id
-      seller {
-        id
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      buyer {
-        id
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      asset {
-        id
-        name
-        price
-        owner
-        address
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
       amount
+      buyer
+      seller
+      asset
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      transactionSellerId
-      transactionBuyerId
-      transactionAssetId
     }
   }
 `;
@@ -166,49 +63,15 @@ export const onUpdateTransaction = /* GraphQL */ `
   subscription OnUpdateTransaction {
     onUpdateTransaction {
       id
-      seller {
-        id
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      buyer {
-        id
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      asset {
-        id
-        name
-        price
-        owner
-        address
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
       amount
+      buyer
+      seller
+      asset
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      transactionSellerId
-      transactionBuyerId
-      transactionAssetId
     }
   }
 `;
@@ -216,49 +79,15 @@ export const onDeleteTransaction = /* GraphQL */ `
   subscription OnDeleteTransaction {
     onDeleteTransaction {
       id
-      seller {
-        id
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      buyer {
-        id
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      asset {
-        id
-        name
-        price
-        owner
-        address
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
       amount
+      buyer
+      seller
+      asset
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      transactionSellerId
-      transactionBuyerId
-      transactionAssetId
     }
   }
 `;
@@ -270,6 +99,7 @@ export const onCreateNFT = /* GraphQL */ `
       price
       owner
       address
+      onSale
       createdAt
       updatedAt
       _version
@@ -286,6 +116,7 @@ export const onUpdateNFT = /* GraphQL */ `
       price
       owner
       address
+      onSale
       createdAt
       updatedAt
       _version
@@ -302,6 +133,7 @@ export const onDeleteNFT = /* GraphQL */ `
       price
       owner
       address
+      onSale
       createdAt
       updatedAt
       _version
@@ -314,9 +146,10 @@ export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {
       id
-      firstName
-      lastName
       email
+      address
+      privateKey
+      coins
       createdAt
       updatedAt
       _version
@@ -329,9 +162,10 @@ export const onUpdateUser = /* GraphQL */ `
   subscription OnUpdateUser {
     onUpdateUser {
       id
-      firstName
-      lastName
       email
+      address
+      privateKey
+      coins
       createdAt
       updatedAt
       _version
@@ -344,9 +178,10 @@ export const onDeleteUser = /* GraphQL */ `
   subscription OnDeleteUser {
     onDeleteUser {
       id
-      firstName
-      lastName
       email
+      address
+      privateKey
+      coins
       createdAt
       updatedAt
       _version

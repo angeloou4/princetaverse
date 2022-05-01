@@ -5,36 +5,13 @@ export const getBookmark = /* GraphQL */ `
   query GetBookmark($id: ID!) {
     getBookmark(id: $id) {
       id
-      user {
-        id
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      asset {
-        id
-        name
-        price
-        owner
-        address
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
+      user
+      asset
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      bookmarkUserId
-      bookmarkAssetId
     }
   }
 `;
@@ -47,13 +24,13 @@ export const listBookmarks = /* GraphQL */ `
     listBookmarks(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        user
+        asset
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        bookmarkUserId
-        bookmarkAssetId
       }
       nextToken
       startedAt
@@ -75,13 +52,13 @@ export const syncBookmarks = /* GraphQL */ `
     ) {
       items {
         id
+        user
+        asset
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        bookmarkUserId
-        bookmarkAssetId
       }
       nextToken
       startedAt
@@ -92,49 +69,15 @@ export const getTransaction = /* GraphQL */ `
   query GetTransaction($id: ID!) {
     getTransaction(id: $id) {
       id
-      seller {
-        id
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      buyer {
-        id
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      asset {
-        id
-        name
-        price
-        owner
-        address
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
       amount
+      buyer
+      seller
+      asset
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      transactionSellerId
-      transactionBuyerId
-      transactionAssetId
     }
   }
 `;
@@ -148,14 +91,14 @@ export const listTransactions = /* GraphQL */ `
       items {
         id
         amount
+        buyer
+        seller
+        asset
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        transactionSellerId
-        transactionBuyerId
-        transactionAssetId
       }
       nextToken
       startedAt
@@ -178,14 +121,14 @@ export const syncTransactions = /* GraphQL */ `
       items {
         id
         amount
+        buyer
+        seller
+        asset
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        transactionSellerId
-        transactionBuyerId
-        transactionAssetId
       }
       nextToken
       startedAt
@@ -200,6 +143,7 @@ export const getNFT = /* GraphQL */ `
       price
       owner
       address
+      onSale
       createdAt
       updatedAt
       _version
@@ -221,6 +165,7 @@ export const listNFTS = /* GraphQL */ `
         price
         owner
         address
+        onSale
         createdAt
         updatedAt
         _version
@@ -251,6 +196,7 @@ export const syncNFTS = /* GraphQL */ `
         price
         owner
         address
+        onSale
         createdAt
         updatedAt
         _version
@@ -266,9 +212,10 @@ export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       id
-      firstName
-      lastName
       email
+      address
+      privateKey
+      coins
       createdAt
       updatedAt
       _version
@@ -286,9 +233,10 @@ export const listUsers = /* GraphQL */ `
     listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        firstName
-        lastName
         email
+        address
+        privateKey
+        coins
         createdAt
         updatedAt
         _version
@@ -315,9 +263,10 @@ export const syncUsers = /* GraphQL */ `
     ) {
       items {
         id
-        firstName
-        lastName
         email
+        address
+        privateKey
+        coins
         createdAt
         updatedAt
         _version
