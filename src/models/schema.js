@@ -13,30 +13,16 @@ export const schema = {
                 "user": {
                     "name": "user",
                     "isArray": false,
-                    "type": {
-                        "model": "User"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id",
-                        "targetName": "bookmarkUserId"
-                    }
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "asset": {
                     "name": "asset",
                     "isArray": false,
-                    "type": {
-                        "model": "NFT"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id",
-                        "targetName": "bookmarkAssetId"
-                    }
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -53,20 +39,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
-                },
-                "bookmarkUserId": {
-                    "name": "bookmarkUserId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "bookmarkAssetId": {
-                    "name": "bookmarkAssetId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
                 }
             },
             "syncable": true,
@@ -94,8 +66,8 @@ export const schema = {
                 }
             ]
         },
-        "User": {
-            "name": "User",
+        "Transaction": {
+            "name": "Transaction",
             "fields": {
                 "id": {
                     "name": "id",
@@ -104,39 +76,32 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "firstName": {
-                    "name": "firstName",
+                "amount": {
+                    "name": "amount",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Float",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "buyer": {
+                    "name": "buyer",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "seller": {
+                    "name": "seller",
+                    "isArray": false,
+                    "type": "ID",
                     "isRequired": false,
                     "attributes": []
                 },
-                "lastName": {
-                    "name": "lastName",
+                "asset": {
+                    "name": "asset",
                     "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "email": {
-                    "name": "email",
-                    "isArray": false,
-                    "type": "AWSEmail",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "address": {
-                    "name": "address",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "privateKey": {
-                    "name": "privateKey",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
+                    "type": "ID",
+                    "isRequired": true,
                     "attributes": []
                 },
                 "createdAt": {
@@ -157,7 +122,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Users",
+            "pluralName": "Transactions",
             "attributes": [
                 {
                     "type": "model",
@@ -195,20 +160,20 @@ export const schema = {
                     "name": "name",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "price": {
                     "name": "price",
                     "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
+                    "type": "Float",
+                    "isRequired": true,
                     "attributes": []
                 },
                 "owner": {
                     "name": "owner",
                     "isArray": false,
-                    "type": "String",
+                    "type": "ID",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -216,6 +181,13 @@ export const schema = {
                     "name": "address",
                     "isArray": false,
                     "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "onSale": {
+                    "name": "onSale",
+                    "isArray": false,
+                    "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -261,8 +233,8 @@ export const schema = {
                 }
             ]
         },
-        "Transaction": {
-            "name": "Transaction",
+        "User": {
+            "name": "User",
             "fields": {
                 "id": {
                     "name": "id",
@@ -271,52 +243,31 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "seller": {
-                    "name": "seller",
+                "email": {
+                    "name": "email",
                     "isArray": false,
-                    "type": {
-                        "model": "User"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id",
-                        "targetName": "transactionSellerId"
-                    }
+                    "type": "AWSEmail",
+                    "isRequired": true,
+                    "attributes": []
                 },
-                "buyer": {
-                    "name": "buyer",
-                    "isArray": false,
-                    "type": {
-                        "model": "User"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id",
-                        "targetName": "transactionBuyerId"
-                    }
-                },
-                "asset": {
-                    "name": "asset",
-                    "isArray": false,
-                    "type": {
-                        "model": "NFT"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id",
-                        "targetName": "transactionAssetId"
-                    }
-                },
-                "amount": {
-                    "name": "amount",
+                "address": {
+                    "name": "address",
                     "isArray": false,
                     "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "privateKey": {
+                    "name": "privateKey",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "coins": {
+                    "name": "coins",
+                    "isArray": false,
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -335,31 +286,10 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
-                },
-                "transactionSellerId": {
-                    "name": "transactionSellerId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "transactionBuyerId": {
-                    "name": "transactionBuyerId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "transactionAssetId": {
-                    "name": "transactionAssetId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
                 }
             },
             "syncable": true,
-            "pluralName": "Transactions",
+            "pluralName": "Users",
             "attributes": [
                 {
                     "type": "model",
@@ -386,5 +316,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "e17125c91cf07b03ae654641742c5846"
+    "version": "79981b4abe65eb4eea30ce071fa6603c"
 };
