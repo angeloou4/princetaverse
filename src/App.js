@@ -30,64 +30,100 @@ function App() {
 
   const [logged, setLogged] = useState(false)
   const [usersNFTs, setUsersNFTs] = useState([])
+  const [buildingInfo, setBuildingInfo] = useState({})
 
-	useEffect(() => {
-		Auth.currentAuthenticatedUser()
+
+	useEffect(async () => {
+    console.log('rtygjuki')
+		
+    Auth.currentAuthenticatedUser()
 			.then(user => {
         setLogged(true)
       })
 			.catch(err => setLogged( false ));
-	});
 
-  // dummy data
+    async function fetchData() {
+      // fill in buildings data
+
+
+      let buildingResults = await API.graphql({ 
+        query: queries.listNFTS, 
+      })
+      let newBuildingInfo = {};
+      for (let i in buildingResults.data.listNFTS.items) {
+        let building = buildingResults.data.listNFTS.items[i]
+        newBuildingInfo[building.name] = building
+      }
+      setBuildingInfo(newBuildingInfo)
+  
+    }
+    await fetchData()
+    console.log('running')
+
+      
+	}, []);
+
+  console.log(buildingInfo)
   const buildings = [
     {
       title: "Nassau Hall",
       coordinates: [40.34871638489288, -74.65933681262437],
       image: nassau,
-      price: 500000,
-      current_owner: {"name": "Chris Eisgruber", "id": 12345},
-      address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+      price: buildingInfo['Nassau Hall'] ? buildingInfo['Nassau Hall']['price'] : 0,
+      current_owner: {"name": buildingInfo['Nassau Hall'] ? buildingInfo['Nassau Hall']['email'] : 0, "id": 12345},
+      address: buildingInfo['Nassau Hall'] ? buildingInfo['Nassau Hall']['address'] : 0,
+      tokenID: buildingInfo['Nassau Hall'] ? buildingInfo['Nassau Hall']['tokenID'] : 0,
+      onSale: buildingInfo['Nassau Hall'] ? buildingInfo['Nassau Hall']['onSale'] : 0
     },
     {
       title: "Blair Hall",
       coordinates: [40.34755271639607, -74.66095016529047],
       image: blair,
-      price: 30000,
-      current_owner: {"name": "JP Singh", "id": 43638},
-      address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+      price: buildingInfo['Blair Hall'] ? buildingInfo['Blair Hall']['price'] : 0,
+      current_owner: {"name": buildingInfo['Blair Hall'] ? buildingInfo['Blair Hall']['email'] : 0, "id": 43638},
+      address: buildingInfo['Blair Hall'] ? buildingInfo['Blair Hall']['address'] : 0,
+      tokenID: buildingInfo['Blair Hall'] ? buildingInfo['Blair Hall']['tokenID'] : 0,
+      onSale: buildingInfo['Blair Hall'] ? buildingInfo['Blair Hall']['onSale'] : 0
     },
     {
       title: "Firestone Library",
       coordinates: [40.34953654878533, -74.65767135187826],
       image: firestone,
-      price: 400000,
-      current_owner: {"name": "Robert Fish", "id": 2343254},
-      address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+      price: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['price'] : 0,
+      current_owner: {"name": buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['email'] : 0, "id": 2343254},
+      address: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['address'] : 0,
+      tokenID: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['tokenID'] : 0,
+      onSale: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['onSale'] : 0
     },
     {
       title: "Dillon Gym",
       coordinates: [40.34561808315859, -74.65879483048707],
       image: dillon,
-      price: 450000,
-      current_owner: {"name": "Satoshi Nakamoto", "id": 21000000},
-      address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+      price: buildingInfo['Dillon Gym'] ? buildingInfo['Dillon Gym']['price'] : 0,
+      current_owner: {"name": buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['email'] : 0, "id": 21000000},
+      address: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['address'] : 0,
+      tokenID: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['tokenID'] : 0,
+      onSale: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['onSale'] : 0
     },
     {
       title: "Fine Hall",
       coordinates: [40.34569349233305, -74.65278215989223],
       image: fine,
-      price: 200000,
-      current_owner: {"name": "Jane Street", "id": 4356543},
-      address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+      price: buildingInfo['Fine Hall'] ? buildingInfo['Fine Hall']['price'] : 0,
+      current_owner: {"name": buildingInfo['Fine Hall'] ? buildingInfo['Fine Hall']['email'] : 0, "id": 4356543},
+      address: buildingInfo['Fine Hall'] ? buildingInfo['Fine Hall']['address'] : 0,
+      tokenID: buildingInfo['Fine Hall'] ? buildingInfo['Fine Hall']['tokenID'] : 0,
+      onSale: buildingInfo['Fine Hall'] ? buildingInfo['Fine Hall']['onSale'] : 0
     },
     {
       title: "Robertson Hall",
       coordinates: [40.34838490645056, -74.65473808475684],
       image: morrison,
-      price: 300000,
-      current_owner: {"name": "Goldman Sachs", "id": 567876},
-      address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+      price: buildingInfo['Robertson Hall'] ? buildingInfo['Robertson Hall']['price'] : 0,
+      current_owner: {"name": buildingInfo['Robertson Hall'] ? buildingInfo['Robertson Hall']['email'] : 0, "id": 567876},
+      address: buildingInfo['Robertson Hall'] ? buildingInfo['Robertson Hall']['address'] : 0,
+      tokenID: buildingInfo['Robertson Hall'] ? buildingInfo['Robertson Hall']['tokenID'] : 0,
+      onSale: buildingInfo['Robertson Hall'] ? buildingInfo['Robertson Hall']['onSale'] : 0
     },
   ]
 
@@ -114,7 +150,7 @@ function App() {
 
               console.log(NFTs)
 
-              setUsersNFTs(NFTs)
+              setUsersNFTs(NFTs.data.listNFTS.items) // array
 
               break;
           case 'signUp':
@@ -168,7 +204,7 @@ function App() {
       <MenuBar logged={logged} setLogged={(bool) => setLogged(bool)} />
 
       <Routes>
-        <Route path="/" element={<Map buildings={buildings} />}/>
+        <Route path="/" element={<Map logged={logged} buildings={buildings}  />}/>
         <Route path='/login' element={<Login setLogged={(bool) => setLogged(bool)} />} />
         <Route path='/profile/:id' element={<Profile buildings={buildings} isLoggedInUser={true}/>}/>
       </Routes>
@@ -179,3 +215,7 @@ function App() {
 }
 
 export default App;
+
+// , buildingPrices, buildingOwners
+
+// buildingPrices={buildingPrices} buildingOwners={buildingOwners}

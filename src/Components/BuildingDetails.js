@@ -9,8 +9,9 @@ import * as mutations from '../graphql/mutations'
 import * as queries from '../graphql/queries'
 import { transferNFT } from '../blockchain/scripts/transferNFT'
 import { transferCoins } from '../blockchain/scripts/transferCoins'
+import { Link } from "react-router-dom";
 
-const BuildingDetails = ({ building, buying = true, dialogContent }) => {
+const BuildingDetails = ({ building, buying = true, dialogContent, logged}) => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const { title, coordinates, image, price, current_owner, address, token_id } = building
 	const etherscan_address = "https://etherscan.io/address/" + address
@@ -89,8 +90,19 @@ const BuildingDetails = ({ building, buying = true, dialogContent }) => {
 
 					<h2>${price}</h2>
 
-					<div className="action-button" onClick={() => { setIsDialogOpen(true) }} style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}> {buying ? "Purchase" : "Sell"} </div>
+					{ logged ? 
+						<div className="action-button" onClick={() => { setIsDialogOpen(true) }} style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}>
+						"Purchase"
+						</div> :
+						<Link to='/Login' style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}>Login to Purchase</Link>
+					}	
 
+
+
+					 
+					{/* { buying ? "Purchase" : "Sell"}  */}
+					
+					
 				</div>
 			</Box>
 			<Dialog

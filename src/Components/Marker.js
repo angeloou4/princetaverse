@@ -13,9 +13,9 @@ const Marker = ({details, index, showBuilding}) => {
 		mouseover() {
 			if (markerRef) markerRef.current.openPopup();
 		},
-		click() {
-			showBuilding(index)
-		}
+		// click() {
+		// 	showBuilding(index)
+		// },
 		// mouseout() {
 		// 	if (markerRef) markerRef.current.closePopup();
 		// }
