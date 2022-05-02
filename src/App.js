@@ -29,6 +29,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(API_URL))
 function App() {
 
   const [logged, setLogged] = useState(false)
+  const [usersNFTs, setUsersNFTs] = useState([])
 
 	useEffect(() => {
 		Auth.currentAuthenticatedUser()
@@ -91,16 +92,37 @@ function App() {
   ]
 
   const listener = async (data) => {
+      let userInfo = null
+      let email = null
       switch (data.payload.event) {
           case 'signIn':
               setLogged(true)
+
+              userInfo = await Auth.currentUserInfo()
+              email = userInfo.attributes.email
+              console.log(userInfo.attributes)
+              
+              let filter = {
+                owner: {
+                  eq: email
+                }
+              }
+              let NFTs = await API.graphql({ 
+                query: queries.listNFTS, 
+                variables: { filter: filter }
+              })
+
+              console.log(NFTs)
+
+              setUsersNFTs(NFTs)
+
               break;
           case 'signUp':
               setLogged(true)
 
               // Don't run if user exists
-              let userInfo = await Auth.currentUserInfo()
-              let email = userInfo.attributes.email
+              userInfo = await Auth.currentUserInfo()
+              email = userInfo.attributes.email
               const existingUsers = await API.graphql(graphqlOperation(queries.listUsers))
               const allUsers = existingUsers.data.listUsers.items
               const sameUsers = allUsers.filter(user => user.email === email)
