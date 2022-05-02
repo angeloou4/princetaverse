@@ -173,7 +173,7 @@ export const schema = {
                 "owner": {
                     "name": "owner",
                     "isArray": false,
-                    "type": "ID",
+                    "type": "AWSEmail",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -188,6 +188,13 @@ export const schema = {
                     "name": "onSale",
                     "isArray": false,
                     "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "tokenID": {
+                    "name": "tokenID",
+                    "isArray": false,
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -316,5 +323,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "79981b4abe65eb4eea30ce071fa6603c"
+    "version": "9352d0b47ba089d44c000b88f36e18a0"
 };

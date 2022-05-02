@@ -3,7 +3,7 @@
   "serviceConfiguration": {
     "apiName": "princetaverse",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/tmp/amplify-8ae92adb-b50d-4639-a8a6-8d112b193b47/amplify/backend/api/princetaverse/schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-8f07a2c4-5bb9-428e-96b8-b4fe695f2ce5/amplify/backend/api/princetaverse/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
       "keyDescription": "api key description",

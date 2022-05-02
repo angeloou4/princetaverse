@@ -49,6 +49,7 @@ export declare class NFT {
   readonly owner?: string | null;
   readonly address: string;
   readonly onSale?: boolean | null;
+  readonly tokenID?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<NFT, NFTMetaData>);

@@ -16,9 +16,10 @@ type NFT @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   price: Float!
-  owner: ID
+  owner: AWSEmail
   address: String!
   onSale: Boolean
+  tokenID: Int
 }
 
 type User @model @auth(rules: [{allow: public}]) {

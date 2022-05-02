@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
 import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from "./ListItem"
 import Dialog from "./Dialogue"
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import * as mutations from '../graphql/mutations'
@@ -13,7 +10,7 @@ import { Link } from "react-router-dom";
 
 const BuildingDetails = ({ building, buying = true, dialogContent, logged}) => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
-	const { title, coordinates, image, price, current_owner, address, token_id } = building
+	const { title, coordinates, image, price, current_owner, address, tokenID } = building
 	const etherscan_address = "https://etherscan.io/address/" + address
 
 	const handlePurchase = async () => {
@@ -32,7 +29,7 @@ const BuildingDetails = ({ building, buying = true, dialogContent, logged}) => {
 		await transferCoins(userInfo.address, ownerInfo.address, price, userInfo.privateKey)
 
 		// Transfer NFT on blockchain
-		await transferNFT(userInfo.address, ownerInfo.address, token_id, ownerInfo.privateKey)
+		await transferNFT(userInfo.address, ownerInfo.address, tokenID, ownerInfo.privateKey)
 
 		// Update user in database
 		const userDetails = {
@@ -57,7 +54,7 @@ const BuildingDetails = ({ building, buying = true, dialogContent, logged}) => {
 		// Update NFT in database
 		const existingNFTs = await API.graphql(graphqlOperation(queries.listNFTS))
 		const allNFTs = existingNFTs.data.listNFTS.items
-		const NFTInfo = allNFTs.filter(nft => nft.tokenID === token_id)[0]
+		const NFTInfo = allNFTs.filter(nft => nft.tokenID === tokenID)[0]
 		const NFTDetails = {
 			id: NFTInfo.id,
 			price: -1,
@@ -85,14 +82,14 @@ const BuildingDetails = ({ building, buying = true, dialogContent, logged}) => {
 					</div>
 					{/* maybe eventually replace with link to profile page */}
 					<div style={{ textAlign: "center", width: "100%" }}>
-						<h5>Currently owned by <a href={"/profile/" + current_owner.id}>{current_owner.name}</a></h5>
+						<h5> Owned by <a href={"/profile/" + current_owner.id}>{current_owner.name}</a></h5>
 					</div>
 
 					<h2>${price}</h2>
 
 					{ logged ? 
 						<div className="action-button" onClick={() => { setIsDialogOpen(true) }} style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}>
-						"Purchase"
+						Purchase
 						</div> :
 						<Link to='/Login' style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}>Login to Purchase</Link>
 					}	

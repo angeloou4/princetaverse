@@ -21,7 +21,7 @@ L.Icon.Default.mergeOptions({
 });
 
 // buildings is an array of buildings
-const Map = ({ buildings, logged}) => {
+const Map = ({ buildings, logged }) => {
 
 	const [isBuildingSidebarOpen, setIsBuildingSidebarOpen] = React.useState(false);
 	const [isListSidebarOpen, setIsListSidebarOpen] = React.useState(false);
