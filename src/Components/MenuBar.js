@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Auth } from 'aws-amplify';
 
 function MenuBar({ logged, setLogged }) {
@@ -15,6 +15,7 @@ function MenuBar({ logged, setLogged }) {
 			const handleSignOut = () => {
 				Auth.signOut()
 				setLogged(false)
+				setRightButton(<Navigate to='/' />) // hack
 			}
 
 			setRightButton(
