@@ -7,11 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-const Dialog = ({open, setOpen, dialogContent}) => {
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+const Dialog = ({ open, setOpen, dialogContent, handlePurchase }) => {
 
   const handleClose = () => {
     setOpen(false);
@@ -22,9 +18,9 @@ const Dialog = ({open, setOpen, dialogContent}) => {
 
       <MyDialog open={open} onClose={handleClose} >
         {dialogContent}
-		<DialogActions sx={{padding: "0px 20px 20px 0px"}}>
+		  <DialogActions sx={{padding: "0px 20px 20px 0px"}}>
 				<Button onClick={handleClose}>Cancel</Button>
-				<Button onClick={handleClose}>Confirm</Button>
+				<Button onClick={handlePurchase}>Confirm</Button>
 			</DialogActions>
       </MyDialog>
     </div>

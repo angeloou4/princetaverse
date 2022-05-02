@@ -4,11 +4,72 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from "./ListItem"
 import Dialog from "./Dialogue"
+import { Auth, API, graphqlOperation } from 'aws-amplify';
+import * as mutations from '../graphql/mutations'
+import * as queries from '../graphql/queries'
+import { transferNFT } from '../blockchain/scripts/transferNFT'
+import { transferCoins } from '../blockchain/scripts/transferCoins'
 
 const BuildingDetails = ({ building, buying = true, dialogContent }) => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
-	const { title, coordinates, image, price, current_owner, address } = building
+	const { title, coordinates, image, price, current_owner, address, token_id } = building
 	const etherscan_address = "https://etherscan.io/address/" + address
+
+	const handlePurchase = async () => {
+
+		// Get user and owner info
+		const userAuthInfo = await Auth.currentUserInfo()
+		const currentEmail = userAuthInfo.attributes.email
+		const existingUsers = await API.graphql(graphqlOperation(queries.listUsers))
+		const allUsers = existingUsers.data.listUsers.items
+		const userInfo = allUsers.filter(user => user.currentEmail === currentEmail)[0]
+
+		const NFTOwnerEmail = current_owner.name
+		const ownerInfo = allUsers.filter(user => user.email === NFTOwnerEmail)[0]
+
+		// Transfer coins on blockchain
+		await transferCoins(userInfo.address, ownerInfo.address, price, userInfo.privateKey)
+
+		// Transfer NFT on blockchain
+		await transferNFT(userInfo.address, ownerInfo.address, token_id, ownerInfo.privateKey)
+
+		// Update user in database
+		const userDetails = {
+			id: userInfo.id,
+			coins: userInfo.coins - price
+		}		
+		await API.graphql({ 
+			query: mutations.updateUser, 
+			variables: {input: userDetails}
+		})
+
+		// Update owner in database
+		const ownerDetails = {
+			id: ownerInfo.id,
+			coins: ownerInfo.coins + price
+		}		
+		await API.graphql({ 
+			query: mutations.updateUser, 
+			variables: {input: ownerDetails}
+		})
+
+		// Update NFT in database
+		const existingNFTs = await API.graphql(graphqlOperation(queries.listNFTS))
+		const allNFTs = existingNFTs.data.listNFTS.items
+		const NFTInfo = allNFTs.filter(nft => nft.tokenID === token_id)[0]
+		const NFTDetails = {
+			id: NFTInfo.id,
+			price: -1,
+			owner: userInfo.email,
+			onSale: false
+		}		
+		await API.graphql({ 
+			query: mutations.updateUser, 
+			variables: {input: NFTDetails}
+		})
+
+	}
+
 	return (
 		<>
 			<Box sx={{ overflowY: 'auto' }}>
@@ -36,6 +97,7 @@ const BuildingDetails = ({ building, buying = true, dialogContent }) => {
 				open={isDialogOpen}
 				setOpen={setIsDialogOpen}
 				dialogContent={dialogContent}
+				handlePurchase={handlePurchase}
 			/>
 		</>
 	)
