@@ -26,7 +26,8 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "truffle-hdwallet-provider": "^1.0.17",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "web3": "^1.7.3"
   },
   "scripts": {
     "start": "react-app-rewired start",

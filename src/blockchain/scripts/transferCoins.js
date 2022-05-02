@@ -1,4 +1,4 @@
-let { API_URL, PUBLIC_KEY, PUBLIC_KEY2, PRIVATE_KEY, PRIVATE_KEY2 } = require('../../secrets')
+let { API_URL, PUBLIC_KEY, PUBLIC_KEY2, PRIVATE_KEY, PRIVATE_KEY2 } = require('../secrets')
 
 const { createAlchemyWeb3 } = require('@alch/alchemy-web3')
 const web3 = createAlchemyWeb3(API_URL)

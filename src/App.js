@@ -1,7 +1,6 @@
 import './App.css';
 import MenuBar from './Components/MenuBar'
 import Map from './Components/Map'
-import Landing from './Components/Landing'
 import Login from './Components/Login'
 import nassau from './images/nassau.jpg'
 import blair from './images/blair.jpg'
@@ -20,11 +19,12 @@ import { Amplify, Auth, Hub, API, graphqlOperation } from 'aws-amplify';
 import * as mutations from './graphql/mutations'
 import * as queries from './graphql/queries'
 import awsExports from './aws-exports';
-import { API_URL, PUBLIC_KEY, PRIVATE_KEY } from './secrets'
-import { createAlchemyWeb3 } from '@alch/alchemy-web3'
+import { API_URL, PUBLIC_KEY2, PRIVATE_KEY } from './blockchain/secrets'
+import Web3 from 'web3'
+import { mintCoins } from './blockchain/scripts/mintCoins'
 
 Amplify.configure(awsExports);
-const web3 = createAlchemyWeb3(API_URL)
+const web3 = new Web3(new Web3.providers.HttpProvider(API_URL))
 
 function App() {
 
@@ -97,41 +97,36 @@ function App() {
               break;
           case 'signUp':
               setLogged(true)
-              
-              const COIN_AMOUNT = 1000
-              
-              // Make new Eth account
 
-              // let newAcc = web3.eth.accounts.create()
-              // let { address, privateKey } = newAcc
-
-              // Give the user coins
-
-
-
-              // Add user to database
-              
+              // Don't run if user exists
               let userInfo = await Auth.currentUserInfo()
               let email = userInfo.attributes.email
-
               const existingUsers = await API.graphql(graphqlOperation(queries.listUsers))
               const allUsers = existingUsers.data.listUsers.items
               const sameUsers = allUsers.filter(user => user.email === email)
-
-              // Don't add user if already exists
               if (sameUsers.length > 0) return
               
+              // Make new Eth account
+              let newAcc = web3.eth.accounts.create()
+              let { address, privateKey } = newAcc
+              
+              // Give the user coins
+              const COIN_AMOUNT = 1234
+              mintCoins(PUBLIC_KEY2, COIN_AMOUNT, PRIVATE_KEY)
+
+              // Add user to database
               const userDetails = {
                 email: email, 
-                address: 'test', 
-                privateKey: 'test',
+                address, 
+                privateKey,
                 coins: COIN_AMOUNT
               }
-              
               const newUser = await API.graphql({ 
                 query: mutations.createUser, 
                 variables: {input: userDetails }
               })
+              console.log('new user: ')
+              console.log(newUser)
 
               break;
           case 'signOut':
