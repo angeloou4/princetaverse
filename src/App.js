@@ -20,11 +20,11 @@ import { Amplify, Auth, Hub, API, graphqlOperation } from 'aws-amplify';
 import * as mutations from './graphql/mutations'
 import * as queries from './graphql/queries'
 import awsExports from './aws-exports';
-// import { API_URL, PUBLIC_KEY, PRIVATE_KEY } from './secrets'
-// import { createAlchemyWeb3 } from '@alch/alchemy-web3'
+import { API_URL, PUBLIC_KEY, PRIVATE_KEY } from './secrets'
+import { createAlchemyWeb3 } from '@alch/alchemy-web3'
 
 Amplify.configure(awsExports);
-// const web3 = createAlchemyWeb3(API_URL)
+const web3 = createAlchemyWeb3(API_URL)
 
 function App() {
 
