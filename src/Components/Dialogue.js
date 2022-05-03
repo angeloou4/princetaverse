@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import MyDialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -11,7 +11,8 @@ import { transferNFT } from '../blockchain/scripts/transferNFT'
 import { transferCoins } from '../blockchain/scripts/transferCoins'
 
 const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
-	const { title, coordinates, image, price, current_owner, address, tokenID } = building
+  const { title, coordinates, image, price, current_owner, address, tokenID } = building
+  const [sellPrice, setSellPrice] = useState(price)
 
   const handleClose = () => {
     setOpen(false);
@@ -49,7 +50,7 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 		const ownerDetails = {
 			id: ownerInfo.id,
 			coins: ownerInfo.coins + price
-		}		
+		}
 		await API.graphql({ 
 			query: mutations.updateUser, 
 			variables: {input: ownerDetails}
@@ -64,7 +65,37 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 			price: -1,
 			owner: userInfo.email,
 			onSale: false
-		}		
+		}
+		await API.graphql({ 
+			query: mutations.updateUser, 
+			variables: {input: NFTDetails}
+		})
+
+	}
+
+	const handleSell = async () => {
+
+		// Get user and owner info
+		const userAuthInfo = await Auth.currentUserInfo()
+		const currentEmail = userAuthInfo.attributes.email
+		const existingUsers = await API.graphql(graphqlOperation(queries.listUsers))
+		const allUsers = existingUsers.data.listUsers.items
+		const userInfo = allUsers.filter(user => user.currentEmail === currentEmail)[0]
+    
+		// Confirm user has coins
+    if (sellPrice > userInfo.coins) {
+      return
+    }
+
+		// Update NFT in database
+		const existingNFTs = await API.graphql(graphqlOperation(queries.listNFTS))
+		const allNFTs = existingNFTs.data.listNFTS.items
+		const NFTInfo = allNFTs.filter(nft => nft.tokenID === tokenID)[0]
+		const NFTDetails = {
+			id: NFTInfo.id,
+			price: sellPrice,
+			onSale: true
+		}
 		await API.graphql({ 
 			query: mutations.updateUser, 
 			variables: {input: NFTDetails}
@@ -77,13 +108,15 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 
       <MyDialog open={open} onClose={handleClose} >
       {
-        userOwnsNFT ? 
-        <SellDialogContent building={building} /> : 
-        <BuyDialogContent building={building} />
+        userOwnsNFT ? (
+          <SellDialogContent building={building} setSellPrice={setSellPrice} />
+        ) : (
+          <BuyDialogContent building={building} />
+        )
       }
 		  <DialogActions sx={{padding: "0px 20px 20px 0px"}}>
 				<Button onClick={handleClose}>Cancel</Button>
-				<Button onClick={handlePurchase}>Confirm</Button>
+				<Button onClick={userOwnsNFT ? handleSell : handlePurchase}>Confirm</Button>
 			</DialogActions>
       </MyDialog>
     </div>

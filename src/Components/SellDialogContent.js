@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-const BuyDialogContent = ({ building }) => {
+const SellDialogContent = ({ building, setSellPrice }) => {
 	const { title, coordinates, image, price, current_owner, address } = building
 	return (
 		<>
@@ -24,6 +24,7 @@ const BuyDialogContent = ({ building }) => {
 								margin="dense"
 								id="price"
 								type="price"
+								onChange={e => setSellPrice(e.target.value || 0)}
 								variant="standard"
 								sx={{position: "relative", bottom: "10px"}}
 							/>
@@ -36,4 +37,4 @@ const BuyDialogContent = ({ building }) => {
 	)
 }
 
-export default BuyDialogContent
+export default SellDialogContent
