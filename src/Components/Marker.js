@@ -35,7 +35,12 @@ const Marker = ({details, index, showBuilding}) => {
 					<img src={image} alt={title}
 						style = {{objectFit: "contain", "width": "100%", "height": "200px"}}/>
 					<h1 style={{textDecoration: "underline"}}>{title}</h1>
-					<h2>${price}</h2>
+					{ price === -1 ? (
+							<h3>Not For Sale</h3>
+						) : (
+							<h2>{price} PTON</h2>
+						)
+					}
 					{/* maybe eventually replace with link to profile page */}
 					<h5> Owned by <a href={"/profile/" + current_owner.split('@')[0]}>{current_owner}</a></h5>
 					<h4 onClick={()=> {showBuilding(index)}} style={{color: "#0000EE", cursor: "pointer"}}>view</h4>

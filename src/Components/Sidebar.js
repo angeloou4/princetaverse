@@ -11,7 +11,6 @@ const Sidebar = ({ content, open, setOpen, marginTop="77px", height}) => {
 
   const handleDrawerClose = () => {
     setOpen(false);
-    console.log("ASfsafsda")
   }
 
   const DrawerHeader = styled('div')(({ theme }) => ({

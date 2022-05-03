@@ -9,7 +9,12 @@ const ListItem = ({ details, setItem, index, showBuilding }) => {
 			<div style={{ width: "100%", height: "300px", display: "flex", float: "left", justifyContent:"space-between", padding: "0px 20px"}}>
 				<div style={{display: "flex", flexDirection: "column", margin: "30px 5px", justifyContent: "flex-start"}}>
 					<h1>{title}</h1>
-					<h2 style={{color: "gray", }}>${price}</h2>
+					{ price === -1 ? (
+							<h3 style={{color:"gray"}}>Not For Sale</h3>
+						) : (
+							<h2 style={{color:"gray"}}>{price} PTON</h2>
+						)
+					}
 					{/* maybe eventually replace with link to profile page */}
 					<h5>Owned by <a href={"/profile/" + current_owner.split('@')[0]}>{current_owner}</a></h5>
 				</div>

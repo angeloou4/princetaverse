@@ -20,6 +20,10 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 
 	const handlePurchase = async () => {
 
+		console.log("Handling purchase... might take a minute...")
+		setOpen(false)
+		alert("Handling purchase... might take a minute. You'll receive another message once the transaction is completed on the blockchain")
+
 		// Get user and owner info
 		const userAuthInfo = await Auth.currentUserInfo()
 		const currentEmail = userAuthInfo.attributes.email
@@ -48,8 +52,6 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 			coins: userInfo.coins - price,
 			_version: userInfo._version
 		}		
-		console.log('userDetails')
-		console.log(userDetails)
 		await API.graphql({ 
 			query: mutations.updateUser, 
 			variables: {input: userDetails}
@@ -61,8 +63,6 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 			coins: ownerInfo.coins + price,
 			_version: ownerInfo._version
 		}
-		console.log('ownerDetails')
-		console.log(ownerDetails)
 		await API.graphql({ 
 			query: mutations.updateUser, 
 			variables: {input: ownerDetails}
@@ -86,9 +86,14 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 			variables: {input: NFTDetails}
 		})
 
+		alert("Success! The NFT is now yours. Please refresh to see updates")
+
 	}
 
 	const handleSell = async () => {
+
+		setOpen(false)
+		alert("We got your request -- you'll receive another confirmation shortly if successful")
 
 		// Confirm user has coins
     if (parseInt(sellPrice) < 0) {
@@ -112,7 +117,8 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 			variables: {input: NFTDetails}
 		})
 
-    console.log('sold!')
+		alert("Your sale is on the market! Please refresh to see updates")
+    console.log('Sold!')
 		console.log(res)
 
 	}

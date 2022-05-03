@@ -15,7 +15,7 @@ const SellDialogContent = ({ building, setSellPrice }) => {
 						style={{ objectFit: "contain", "width": "90%", "height": "400px", borderRadius: 10, marginBottom: 20 }} />
 					<DialogContentText sx={{ fontSize: 20 }}>
 						<div style={{ display: "flex", justifyContent: "center", alignItems:"center" }}>
-							<p style={{}}>Sell <strong>{title} </strong> for $</p>
+							<p style={{paddingRight:"10px"}}>Sell <strong>{title} </strong> for</p>
 							<TextField
 								autoFocus
 								margin="dense"
@@ -25,6 +25,7 @@ const SellDialogContent = ({ building, setSellPrice }) => {
 								variant="standard"
 								sx={{position: "relative", bottom: "10px"}}
 							/>
+							<p style={{paddingLeft:"10px"}}> PTON</p>
 						</div>
 					</DialogContentText>
 				</div>

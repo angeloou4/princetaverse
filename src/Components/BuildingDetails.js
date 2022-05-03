@@ -4,7 +4,7 @@ import Dialog from "./Dialogue"
 import { Auth } from 'aws-amplify'
 import { Link } from "react-router-dom";
 
-const BuildingDetails = ({ building, buying = true, logged}) => {
+const BuildingDetails = ({ building, logged}) => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const [userOwnsNFT, setUserOwnsNFT] = useState(false)
 	let { title, image, price, current_owner, address, onSale } = building
@@ -19,8 +19,6 @@ const BuildingDetails = ({ building, buying = true, logged}) => {
 		}
 		fetchData()
 	}, [current_owner])
-
-	console.log(building)
 
 	return (
 		<>
@@ -39,32 +37,38 @@ const BuildingDetails = ({ building, buying = true, logged}) => {
 						<h5> Owned by <a href={"/profile/" + current_owner.split('@')[0]}>{current_owner}</a></h5>
 					</div>
 
-					<h2>${price}</h2>
+					{ price === -1 ? (
+							<h2>Not For Sale</h2>
+						) : (
+							<h2>{price} PTON</h2>
+						)
+					}
 
 					{ logged ? 
 
-						userOwnsNFT ? 
-							onSale ? 
+							userOwnsNFT ? 
+								onSale ? 
 									<div className="action-button" onClick={() => { setIsDialogOpen(true) }} style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}>
 									Edit Sale
 									</div> 
-									: 
+								: 
 									<div className="action-button" onClick={() => { setIsDialogOpen(true) }} style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}>
 									Sell
 									</div> 
-						: 
-							
-							onSale ? 
-								<div className="action-button" onClick={() => { setIsDialogOpen(true) }} style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}>
-								Purchase
-								</div> 
+							: 
+								
+								onSale ? 
+									<div className="action-button" onClick={() => { setIsDialogOpen(true) }} style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}>
+									Purchase
+									</div> 
 								: 
-								<div className="action-button" onClick={() => { setIsDialogOpen(false) }} style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}>
-								Not For Sale
-								</div> 
-							
+									<div className="action-button" onClick={() => { setIsDialogOpen(false) }} style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}>
+									Not For Sale
+									</div> 
 						:
-						<Link to='/Login' style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}>Login to Purchase</Link>
+							<Link to='/Login' style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}>
+								Login to Purchase
+							</Link>
 					}	
 					
 				</div>

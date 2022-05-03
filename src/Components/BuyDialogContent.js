@@ -13,7 +13,7 @@ const BuyDialogContent = ({ building }) => {
 					<img src={image} alt={title}
 						style={{ objectFit: "contain", "width": "90%", "height": "400px", borderRadius: 10, marginBottom: 20 }} />
 					<DialogContentText sx={{ fontSize: 20 }}>
-						Confirm purchase of <strong>{title} </strong> for ${price}?
+						Confirm purchase of <strong>{title} </strong> for {price} PTON?
 					</DialogContentText>
 				</div>
 			</DialogContent>

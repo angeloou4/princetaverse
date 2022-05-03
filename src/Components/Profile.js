@@ -3,13 +3,12 @@ import Sidebar from './Sidebar'
 import BuildingList from './BuildingList'
 import Divider from '@mui/material/Divider';
 import BuildingDetails from './BuildingDetails'
-import BuyDialogContent from "./BuyDialogContent";
 import SellDialogContent from "./SellDialogContent";
 import { useParams } from "react-router-dom";
 import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../graphql/queries'
 
-const Profile = ({ buildings, isLoggedInUser=false }) => {
+const Profile = ({ buildings }) => {
 
 	const { id } = useParams()
 	const [profile, setProfile] = useState({
@@ -43,8 +42,6 @@ const Profile = ({ buildings, isLoggedInUser=false }) => {
 			if (!selectedBuilding || Object.keys(selectedBuilding).length === 0 || selectedBuilding.address === 0) {
 				setSelectedBuilding(profile.buildings[0])
 			}
-			console.log(profile)
-			console.log(selectedBuilding)
 		}
 		fetchData()
 	}, [buildings, id, selectedBuilding, profile])
@@ -95,18 +92,10 @@ const Profile = ({ buildings, isLoggedInUser=false }) => {
 				</div>
 				{/* right side */}
 				<div style={{ width: "calc(100% - 700px)", height: "100%", paddingTop:"10vh"}}>
-				{
-					true > 0 ?
-					<BuildingDetails
-							building={selectedBuilding || {}}
-							buying = {isLoggedInUser ? false : true}
-							dialogContent={
-								isLoggedInUser ?
-								<SellDialogContent building={selectedBuilding}/>
-								: <BuyDialogContent building={selectedBuilding}/>}
-
-						/> : null
-				}
+				<BuildingDetails
+						building={selectedBuilding || {}}
+						logged={true}
+				/>
 				</div>
 			</div>
 

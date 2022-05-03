@@ -228,7 +228,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Map logged={logged} buildings={buildings}  />}/>
         <Route path='/login' element={<Login setLogged={(bool) => setLogged(bool)} />} />
-        <Route path='/profile/:id' element={<Profile buildings={buildings} isLoggedInUser={true}/>}/>
+        <Route path='/profile/:id' element={<Profile buildings={buildings}/>}/>
       </Routes>
       
     </div>
