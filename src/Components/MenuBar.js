@@ -9,6 +9,7 @@ function MenuBar({ logged, setLogged }) {
 	const [rightButton, setRightButton] = useState(
 		<Link to='/login' style={{ fontSize: 30, color: "white" }} className="nav-link">Login</Link>
 	)
+	const [userID, setUserID] = useState('')
 
 	useEffect(() => {
 		if (logged) {
@@ -28,6 +29,12 @@ function MenuBar({ logged, setLogged }) {
 				<Link to='/login' style={{ fontSize: 30, color: "white" }} className="nav-link">Login</Link>
 			)
 		}
+
+		const fetchEmail = async () => {
+			const userAuthInfo = await Auth.currentUserInfo()
+			setUserID(userAuthInfo.attributes.email.split('@')[0])
+		}
+		fetchEmail()
 	}, [logged, setLogged])
 
 	return (
@@ -43,7 +50,7 @@ function MenuBar({ logged, setLogged }) {
 			{/* Profile */}
 			{
 				logged ? (
-					<Link to='/profile/logged-in-user' style={{ fontSize: 30, color: "white" }} className="nav-link" >Profile</Link>
+					<Link to={`/profile/${userID}`} style={{ fontSize: 30, color: "white" }} className="nav-link" >Profile</Link>
 				) : (
 					null
 				)

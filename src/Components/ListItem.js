@@ -11,7 +11,7 @@ const ListItem = ({ details, setItem, index, showBuilding }) => {
 					<h1>{title}</h1>
 					<h2 style={{color: "gray", }}>${price}</h2>
 					{/* maybe eventually replace with link to profile page */}
-					<h5>Owned by {current_owner.name}</h5>
+					<h5>Owned by <a href={"/profile/" + current_owner.name.split('@')[0]}>{current_owner.name}</a></h5>
 				</div>
 				<img src={image}
 					style={{ objectFit: "contain", "height": "220px", margin: "30px 0px", marginRight: "0px", float: "right"}} />

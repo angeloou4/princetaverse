@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 const BuildingDetails = ({ building, buying = true, logged}) => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const [userOwnsNFT, setUserOwnsNFT] = useState(false)
-	const { title, image, price, current_owner, address } = building
+	let { title, image, price, current_owner, address } = building
+	current_owner = current_owner || { name: '', id: '' }
 	const etherscan_address = "https://ropsten.etherscan.io/token/" + address
 
 	useEffect(() => {
@@ -33,7 +34,7 @@ const BuildingDetails = ({ building, buying = true, logged}) => {
 					</div>
 					{/* maybe eventually replace with link to profile page */}
 					<div style={{ textAlign: "center", width: "100%" }}>
-						<h5> Owned by <a href={"/profile/" + current_owner.id}>{current_owner.name}</a></h5>
+						<h5> Owned by <a href={"/profile/" + current_owner.name.split('@')[0]}>{current_owner.name}</a></h5>
 					</div>
 
 					<h2>${price}</h2>
