@@ -1,8 +1,8 @@
-import React, { useRef, useMemo } from "react";
+import React from "react";
 import MuiListItem from '@mui/material/ListItem';
 
 const ListItem = ({ details, setItem, index, showBuilding }) => {
-	const { title, coordinates, image, price, current_owner } = details
+	let { title, image, price, current_owner } = details
 
 	return (
 		<MuiListItem button onClick={() => {showBuilding(index)}}>
@@ -13,7 +13,7 @@ const ListItem = ({ details, setItem, index, showBuilding }) => {
 					{/* maybe eventually replace with link to profile page */}
 					<h5>Owned by <a href={"/profile/" + current_owner.name.split('@')[0]}>{current_owner.name}</a></h5>
 				</div>
-				<img src={image}
+				<img src={image} alt={title}
 					style={{ objectFit: "contain", "height": "220px", margin: "30px 0px", marginRight: "0px", float: "right"}} />
 			</div>
 		</MuiListItem>

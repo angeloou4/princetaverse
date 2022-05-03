@@ -90,13 +90,6 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 
 	const handleSell = async () => {
 
-		// Get user and owner info
-		const userAuthInfo = await Auth.currentUserInfo()
-		const currentEmail = userAuthInfo.attributes.email
-		const existingUsers = await API.graphql(graphqlOperation(queries.listUsers))
-		const allUsers = existingUsers.data.listUsers.items
-		const userInfo = allUsers.filter(user => user.email === currentEmail)[0]
-
 		// Confirm user has coins
     if (parseInt(sellPrice) < 0) {
 			alert('Price must be at least 0')

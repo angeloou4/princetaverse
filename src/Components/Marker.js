@@ -5,7 +5,7 @@ import { Popup } from 'react-leaflet/Popup'
 
 const Marker = ({details, index, showBuilding}) => {
 // coordinates is an object, title is a string, image is a URL, price is a number
-	const {title, coordinates, image, price, current_owner, address} = details
+	const { title, coordinates, image, price, current_owner } = details
 	const markerRef = useRef();
 
 	const eventHandlers = useMemo(
@@ -32,7 +32,7 @@ const Marker = ({details, index, showBuilding}) => {
 				{/* todo: center map on pin when hovered over */}
 				{/* todo: add way to enlarge NFT image */}
 				<div style={{display: "flex", flexDirection: "column", textAlign: "center",  width: 300}}>
-					<img src={image} 
+					<img src={image} alt={title}
 						style = {{objectFit: "contain", "width": "100%", "height": "200px"}}/>
 					<h1 style={{textDecoration: "underline"}}>{title}</h1>
 					<h2>${price}</h2>

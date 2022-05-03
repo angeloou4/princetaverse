@@ -28,8 +28,6 @@ const Map = ({ buildings, logged }) => {
 		setSelectedBuilding(buildings[key])
 		setIsBuildingSidebarOpen(true)
 	}
-	// TODO: update this variable based on if selectedBuilding is owned by currently logged in user
-	const loggedInUserOwnsNFT = false
 
 	return (
 		<div style={{ "height": "100%", "width": "100%" }}>

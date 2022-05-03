@@ -29,7 +29,6 @@ const web3 = new Web3(new Web3.providers.HttpProvider(API_URL))
 function App() {
 
   const [logged, setLogged] = useState(false)
-  const [usersNFTs, setUsersNFTs] = useState([])
   const [buildingInfo, setBuildingInfo] = useState({})
   const [addingUser, setAddingUser] = useState(false)
 
@@ -67,7 +66,7 @@ function App() {
       coordinates: [40.34871638489288, -74.65933681262437],
       image: nassau,
       price: buildingInfo['Nassau Hall'] ? buildingInfo['Nassau Hall']['price'] : 0,
-      current_owner: {"name": buildingInfo['Nassau Hall'] ? buildingInfo['Nassau Hall']['owner'] : 0, "id": 12345},
+      current_owner: {"name": buildingInfo['Nassau Hall'] ? buildingInfo['Nassau Hall']['owner'] : '', "id": 12345},
       address: buildingInfo['Nassau Hall'] ? buildingInfo['Nassau Hall']['address'] : 0,
       tokenID: buildingInfo['Nassau Hall'] ? buildingInfo['Nassau Hall']['tokenID'] : 0,
       onSale: buildingInfo['Nassau Hall'] ? buildingInfo['Nassau Hall']['onSale'] : 0
@@ -77,7 +76,7 @@ function App() {
       coordinates: [40.34755271639607, -74.66095016529047],
       image: blair,
       price: buildingInfo['Blair Hall'] ? buildingInfo['Blair Hall']['price'] : 0,
-      current_owner: {"name": buildingInfo['Blair Hall'] ? buildingInfo['Blair Hall']['owner'] : 0, "id": 43638},
+      current_owner: {"name": buildingInfo['Blair Hall'] ? buildingInfo['Blair Hall']['owner'] : '', "id": 43638},
       address: buildingInfo['Blair Hall'] ? buildingInfo['Blair Hall']['address'] : 0,
       tokenID: buildingInfo['Blair Hall'] ? buildingInfo['Blair Hall']['tokenID'] : 0,
       onSale: buildingInfo['Blair Hall'] ? buildingInfo['Blair Hall']['onSale'] : 0
@@ -87,7 +86,7 @@ function App() {
       coordinates: [40.34953654878533, -74.65767135187826],
       image: firestone,
       price: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['price'] : 0,
-      current_owner: {"name": buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['owner'] : 0, "id": 2343254},
+      current_owner: {"name": buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['owner'] : '', "id": 2343254},
       address: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['address'] : 0,
       tokenID: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['tokenID'] : 0,
       onSale: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['onSale'] : 0
@@ -97,7 +96,7 @@ function App() {
       coordinates: [40.34561808315859, -74.65879483048707],
       image: dillon,
       price: buildingInfo['Dillon Gym'] ? buildingInfo['Dillon Gym']['price'] : 0,
-      current_owner: {"name": buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['owner'] : 0, "id": 21000000},
+      current_owner: {"name": buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['owner'] : '', "id": 21000000},
       address: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['address'] : 0,
       tokenID: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['tokenID'] : 0,
       onSale: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['onSale'] : 0
@@ -107,7 +106,7 @@ function App() {
       coordinates: [40.34569349233305, -74.65278215989223],
       image: fine,
       price: buildingInfo['Fine Hall'] ? buildingInfo['Fine Hall']['price'] : 0,
-      current_owner: {"name": buildingInfo['Fine Hall'] ? buildingInfo['Fine Hall']['owner'] : 0, "id": 4356543},
+      current_owner: {"name": buildingInfo['Fine Hall'] ? buildingInfo['Fine Hall']['owner'] : '', "id": 4356543},
       address: buildingInfo['Fine Hall'] ? buildingInfo['Fine Hall']['address'] : 0,
       tokenID: buildingInfo['Fine Hall'] ? buildingInfo['Fine Hall']['tokenID'] : 0,
       onSale: buildingInfo['Fine Hall'] ? buildingInfo['Fine Hall']['onSale'] : 0
@@ -117,7 +116,7 @@ function App() {
       coordinates: [40.34838490645056, -74.65473808475684],
       image: morrison,
       price: buildingInfo['Robertson Hall'] ? buildingInfo['Robertson Hall']['price'] : 0,
-      current_owner: {"name": buildingInfo['Robertson Hall'] ? buildingInfo['Robertson Hall']['owner'] : 0, "id": 567876},
+      current_owner: {"name": buildingInfo['Robertson Hall'] ? buildingInfo['Robertson Hall']['owner'] : '', "id": 567876},
       address: buildingInfo['Robertson Hall'] ? buildingInfo['Robertson Hall']['address'] : 0,
       tokenID: buildingInfo['Robertson Hall'] ? buildingInfo['Robertson Hall']['tokenID'] : 0,
       onSale: buildingInfo['Robertson Hall'] ? buildingInfo['Robertson Hall']['onSale'] : 0
@@ -125,27 +124,10 @@ function App() {
   ]
 
   const listener = async (data) => {
-      let userInfo = null
       let email = null
       switch (data.payload.event) {
           case 'signIn':
               setLogged(true)
-
-              userInfo = await Auth.currentUserInfo()
-              email = userInfo.attributes.email
-              
-              let filter = {
-                owner: {
-                  eq: email
-                }
-              }
-              let NFTs = await API.graphql({ 
-                query: queries.listNFTS, 
-                variables: { filter: filter }
-              })
-
-              setUsersNFTs(NFTs.data.listNFTS.items) // array
-
               break;
           case 'signUp':
               setLogged(true)
