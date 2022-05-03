@@ -7,8 +7,6 @@ import BuildingList from './BuildingList'
 import BuildingDetails from './BuildingDetails'
 import FloatingIconButton from './FloatingIconButton'
 import 'leaflet/dist/leaflet.css';
-import BuyDialogContent from "./BuyDialogContent";
-import SellDialogContent from "./SellDialogContent";
 
 import L from 'leaflet';
 
@@ -21,7 +19,7 @@ L.Icon.Default.mergeOptions({
 });
 
 // buildings is an array of buildings
-const Map = ({ buildings }) => {
+const Map = ({ buildings, logged }) => {
 
 	const [isBuildingSidebarOpen, setIsBuildingSidebarOpen] = React.useState(false);
 	const [isListSidebarOpen, setIsListSidebarOpen] = React.useState(false);
@@ -30,8 +28,6 @@ const Map = ({ buildings }) => {
 		setSelectedBuilding(buildings[key])
 		setIsBuildingSidebarOpen(true)
 	}
-	// TODO: update this variable based on if selectedBuilding is owned by currently logged in user
-	const loggedInUserOwnsNFT = false
 
 	return (
 		<div style={{ "height": "100%", "width": "100%" }}>
@@ -53,13 +49,9 @@ const Map = ({ buildings }) => {
 				open={isBuildingSidebarOpen}
 				setOpen={setIsBuildingSidebarOpen}
 				content={
-					<BuildingDetails
+					<BuildingDetails 
+						logged={logged}
 						building={selectedBuilding}
-						buying = {loggedInUserOwnsNFT ? false : true}
-						dialogContent={
-							loggedInUserOwnsNFT ?
-							<SellDialogContent building={selectedBuilding}/>
-							: <BuyDialogContent building={selectedBuilding}/>}
 					/>
 				} />
 			<MapContainer center={[40.347402699984606, -74.65859686137848]} zoom={17.5} scrollWheelZoom={true}>

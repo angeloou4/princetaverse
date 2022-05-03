@@ -1,8 +1,7 @@
-let name = 'Campus Club'
-let image = 'ipfs://a'
-let description = 'yes'
-let tokenId = 1
-let filename = 'test.json'
+let image = 'ipfs://IPFS_ADDRESS_OF_IMAGE'
+let name = 'Name'
+let filename = 'NFT_JSONs/NFT_name.json'
+let tokenId = -1
 
 let data = {
   attributes: [
@@ -17,7 +16,6 @@ let data = {
   ], 
   image, 
   name, 
-  description, 
   tokenId
 }
 

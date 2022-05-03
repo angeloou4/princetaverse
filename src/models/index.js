@@ -4,11 +4,11 @@ import { schema } from './schema';
 
 
 
-const { Bookmark, User, NFT, Transaction } = initSchema(schema);
+const { Bookmark, Transaction, NFT, User } = initSchema(schema);
 
 export {
   Bookmark,
-  User,
+  Transaction,
   NFT,
-  Transaction
+  User
 };
