@@ -37,10 +37,10 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 
 		// NOTE BLOCKCHAIN STUFF NOT ENABLED RIGHT NOW
 		// Transfer coins on blockchain
-		// await transferCoins(userInfo.address, ownerInfo.address, price, userInfo.privateKey)
+		await transferCoins(userInfo.address, ownerInfo.address, price, userInfo.privateKey)
 
 		// Transfer NFT on blockchain
-		// await transferNFT(userInfo.address, ownerInfo.address, tokenID, ownerInfo.privateKey)
+		await transferNFT(userInfo.address, ownerInfo.address, tokenID, ownerInfo.privateKey)
 
 		// Update user in database
 		const userDetails = {
