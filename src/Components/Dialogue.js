@@ -40,7 +40,7 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 		await transferCoins(userInfo.address, ownerInfo.address, price, userInfo.privateKey)
 
 		// Transfer NFT on blockchain
-		// await transferNFT(userInfo.address, ownerInfo.address, tokenID, ownerInfo.privateKey)
+		await transferNFT(userInfo.address, ownerInfo.address, tokenID, userInfo.privateKey)
 
 		// Update user in database
 		const userDetails = {

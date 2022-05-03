@@ -12,7 +12,7 @@ const transferNFT = async (from, to, tokenId, privateKey) => {
   const contractAddress = '0x4F4e34beAdB6568f066858f1F8335BD453e080D4' // Address of PrincetonNFT contract
   const nftContract = new web3.eth.Contract(contract.abi, contractAddress)
 
-  const nonce = await web3.eth.getTransactionCount(contractAddress, 'latest') 
+  const nonce = await web3.eth.getTransactionCount(from, 'latest') 
 
   // Create transaction
   const tx = {
