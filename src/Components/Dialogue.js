@@ -25,22 +25,31 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 		const currentEmail = userAuthInfo.attributes.email
 		const existingUsers = await API.graphql(graphqlOperation(queries.listUsers))
 		const allUsers = existingUsers.data.listUsers.items
-		const userInfo = allUsers.filter(user => user.currentEmail === currentEmail)[0]
+		const userInfo = allUsers.filter(user => user.email === currentEmail)[0]
 
 		const NFTOwnerEmail = current_owner.name
 		const ownerInfo = allUsers.filter(user => user.email === NFTOwnerEmail)[0]
 
+    if (parseInt(price) > userInfo.coins) {
+			alert('Not enough coins')
+      return
+    }
+
+		// NOTE BLOCKCHAIN STUFF NOT ENABLED RIGHT NOW
 		// Transfer coins on blockchain
-		await transferCoins(userInfo.address, ownerInfo.address, price, userInfo.privateKey)
+		// await transferCoins(userInfo.address, ownerInfo.address, price, userInfo.privateKey)
 
 		// Transfer NFT on blockchain
-		await transferNFT(userInfo.address, ownerInfo.address, tokenID, ownerInfo.privateKey)
+		// await transferNFT(userInfo.address, ownerInfo.address, tokenID, ownerInfo.privateKey)
 
 		// Update user in database
 		const userDetails = {
 			id: userInfo.id,
-			coins: userInfo.coins - price
+			coins: userInfo.coins - price,
+			_version: userInfo._version
 		}		
+		console.log('userDetails')
+		console.log(userDetails)
 		await API.graphql({ 
 			query: mutations.updateUser, 
 			variables: {input: userDetails}
@@ -49,8 +58,11 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 		// Update owner in database
 		const ownerDetails = {
 			id: ownerInfo.id,
-			coins: ownerInfo.coins + price
+			coins: ownerInfo.coins + price,
+			_version: ownerInfo._version
 		}
+		console.log('ownerDetails')
+		console.log(ownerDetails)
 		await API.graphql({ 
 			query: mutations.updateUser, 
 			variables: {input: ownerDetails}
@@ -64,10 +76,13 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 			id: NFTInfo.id,
 			price: -1,
 			owner: userInfo.email,
-			onSale: false
+			onSale: false,
+			_version: NFTInfo._version
 		}
+		console.log('NFTDetails')
+		console.log(NFTDetails)
 		await API.graphql({ 
-			query: mutations.updateUser, 
+			query: mutations.updateNFT, 
 			variables: {input: NFTDetails}
 		})
 
@@ -80,10 +95,11 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 		const currentEmail = userAuthInfo.attributes.email
 		const existingUsers = await API.graphql(graphqlOperation(queries.listUsers))
 		const allUsers = existingUsers.data.listUsers.items
-		const userInfo = allUsers.filter(user => user.currentEmail === currentEmail)[0]
+		const userInfo = allUsers.filter(user => user.email === currentEmail)[0]
 
 		// Confirm user has coins
-    if (sellPrice > userInfo.coins) {
+    if (parseInt(sellPrice) < 0) {
+			alert('Price must be at least 0')
       return
     }
 
@@ -93,13 +109,18 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 		const NFTInfo = allNFTs.filter(nft => nft.tokenID === tokenID)[0]
 		const NFTDetails = {
 			id: NFTInfo.id,
-			price: sellPrice,
-			onSale: true
+			price: parseInt(sellPrice),
+			onSale: true,
+			_version: NFTInfo._version
 		}
-		await API.graphql({ 
-			query: mutations.updateUser, 
+    
+		let res = await API.graphql({ 
+			query: mutations.updateNFT, 
 			variables: {input: NFTDetails}
 		})
+
+    console.log('sold!')
+		console.log(res)
 
 	}
 
