@@ -96,10 +96,10 @@ function App() {
       coordinates: [40.34561808315859, -74.65879483048707],
       image: dillon,
       price: buildingInfo['Dillon Gym'] ? buildingInfo['Dillon Gym']['price'] : 0,
-      current_owner: {"name": buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['owner'] : '', "id": 21000000},
-      address: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['address'] : 0,
-      tokenID: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['tokenID'] : 0,
-      onSale: buildingInfo['Firestone Library'] ? buildingInfo['Firestone Library']['onSale'] : 0
+      current_owner: {"name": buildingInfo['Dillon Gym'] ? buildingInfo['Dillon Gym']['owner'] : '', "id": 21000000},
+      address: buildingInfo['Dillon Gym'] ? buildingInfo['Dillon Gym']['address'] : 0,
+      tokenID: buildingInfo['Dillon Gym'] ? buildingInfo['Dillon Gym']['tokenID'] : 0,
+      onSale: buildingInfo['Dillon Gym'] ? buildingInfo['Dillon Gym']['onSale'] : 0
     },
     {
       title: "Fine Hall",
