@@ -8,17 +8,19 @@ const BuildingDetails = ({ building, buying = true, logged}) => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const [userOwnsNFT, setUserOwnsNFT] = useState(false)
 	let { title, image, price, current_owner, address, onSale } = building
-	current_owner = current_owner || { name: '', id: '' }
+	current_owner = current_owner || ''
 	const etherscan_address = "https://ropsten.etherscan.io/token/" + address
 
 	useEffect(() => {
 		const fetchData = async () => {
 			let userInfo = await Auth.currentUserInfo()
 			let email = userInfo.attributes.email
-			setUserOwnsNFT(current_owner.name === email)
+			setUserOwnsNFT(current_owner === email)
 		}
 		fetchData()
-	}, [current_owner.name])
+	}, [current_owner])
+
+	console.log(building)
 
 	return (
 		<>
@@ -34,7 +36,7 @@ const BuildingDetails = ({ building, buying = true, logged}) => {
 					</div>
 					{/* maybe eventually replace with link to profile page */}
 					<div style={{ textAlign: "center", width: "100%" }}>
-						<h5> Owned by <a href={"/profile/" + current_owner.name.split('@')[0]}>{current_owner.name}</a></h5>
+						<h5> Owned by <a href={"/profile/" + current_owner.split('@')[0]}>{current_owner}</a></h5>
 					</div>
 
 					<h2>${price}</h2>

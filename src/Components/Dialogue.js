@@ -27,7 +27,7 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 		const allUsers = existingUsers.data.listUsers.items
 		const userInfo = allUsers.filter(user => user.email === currentEmail)[0]
 
-		const NFTOwnerEmail = current_owner.name
+		const NFTOwnerEmail = current_owner
 		const ownerInfo = allUsers.filter(user => user.email === NFTOwnerEmail)[0]
 
     if (parseInt(price) > userInfo.coins) {
