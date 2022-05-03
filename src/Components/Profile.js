@@ -33,7 +33,7 @@ const Profile = ({ buildings, isLoggedInUser=false }) => {
 			newProfile.user = profileInfo
 
 			const profileBuildings = buildings.filter(b => {
-				return b.current_owner.name === profileInfo.email
+				return b.current_owner === profileInfo.email
 			})
 			newProfile.buildings = profileBuildings
 
@@ -81,11 +81,11 @@ const Profile = ({ buildings, isLoggedInUser=false }) => {
 			/>
 			{/* framing div */}
 			<div style={{ display: "flex", width: "100%", height: "100%", marginTop: navBarHeight }}>
-				<div style={{ display: "flex", flexDirection: "column", height: "100%", width: drawerWidth }}>
+				<div style={{ padding: '50px', display: "flex", flexDirection: "column", height: "100%", width: drawerWidth }}>
 					{/* User info */}
 					<div style={{ height: infoBarHeight, width: "100%", position: "relative" }}>
 						<div style={{ margin: "auto", width: "100%" }} classemail="vertical-center">
-							<h1>{email}'s Profile Page</h1>
+							<h1>{email ? email.split('@')[0] + '\'s Profile Page' : null}</h1>
 							<a href={etherscan_address} target="_blank" rel="noreferrer">{address}</a>
 						</div>
 						<Divider />

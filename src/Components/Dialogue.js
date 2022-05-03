@@ -27,7 +27,7 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 		const allUsers = existingUsers.data.listUsers.items
 		const userInfo = allUsers.filter(user => user.email === currentEmail)[0]
 
-		const NFTOwnerEmail = current_owner.name
+		const NFTOwnerEmail = current_owner
 		const ownerInfo = allUsers.filter(user => user.email === NFTOwnerEmail)[0]
 
     if (parseInt(price) > userInfo.coins) {
@@ -37,10 +37,10 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 
 		// NOTE BLOCKCHAIN STUFF NOT ENABLED RIGHT NOW
 		// Transfer coins on blockchain
-		// await transferCoins(userInfo.address, ownerInfo.address, price, userInfo.privateKey)
+		await transferCoins(userInfo.address, ownerInfo.address, price, userInfo.privateKey)
 
 		// Transfer NFT on blockchain
-		// await transferNFT(userInfo.address, ownerInfo.address, tokenID, ownerInfo.privateKey)
+		await transferNFT(userInfo.address, ownerInfo.address, tokenID, ownerInfo.privateKey)
 
 		// Update user in database
 		const userDetails = {
