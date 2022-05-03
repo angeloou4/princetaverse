@@ -144,6 +144,7 @@ export const getNFT = /* GraphQL */ `
       owner
       address
       onSale
+      tokenID
       createdAt
       updatedAt
       _version
@@ -166,6 +167,7 @@ export const listNFTS = /* GraphQL */ `
         owner
         address
         onSale
+        tokenID
         createdAt
         updatedAt
         _version
@@ -197,6 +199,7 @@ export const syncNFTS = /* GraphQL */ `
         owner
         address
         onSale
+        tokenID
         createdAt
         updatedAt
         _version

@@ -100,6 +100,7 @@ export const onCreateNFT = /* GraphQL */ `
       owner
       address
       onSale
+      tokenID
       createdAt
       updatedAt
       _version
@@ -117,6 +118,7 @@ export const onUpdateNFT = /* GraphQL */ `
       owner
       address
       onSale
+      tokenID
       createdAt
       updatedAt
       _version
@@ -134,6 +136,7 @@ export const onDeleteNFT = /* GraphQL */ `
       owner
       address
       onSale
+      tokenID
       createdAt
       updatedAt
       _version
