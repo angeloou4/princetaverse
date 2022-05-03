@@ -8,7 +8,7 @@ function MenuBar() {
 		
 		<NavBar fixed="top" expand="lg" bg="dark" variant="dark" style={{zIndex: 2000}}>
 			<div style={{ marginLeft: 15 }}>
-				<Link to='/' style={{fontSize: 30, color: "white"}} className="nav-link">The Princetaverse</Link>
+				<Link to='/map' style={{fontSize: 30, color: "white"}} className="nav-link">The Princetaverse</Link>
 			</div>
 			<Nav className="me-auto"></Nav>
 			{/* TODO: display link only if user is logged in */}

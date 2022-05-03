@@ -80,7 +80,7 @@ function App() {
       <MenuBar />
 
       <Routes>
-        <Route path="/" element={<Landing />}/>
+        <Route path="/" element={<Map buildings={buildings}/>}/>
         <Route path="/map" element={<Map buildings={buildings} />}/>
         <Route path='/login' element={<Login />} />
         <Route path='/profile/:id' element={<Profile buildings={buildings} isLoggedInUser={true}/>}/>
