@@ -56,11 +56,6 @@ const Map = ({ buildings, logged }) => {
 					<BuildingDetails 
 						logged={logged}
 						building={selectedBuilding}
-						buying = {loggedInUserOwnsNFT ? false : true}
-						dialogContent={
-							loggedInUserOwnsNFT ?
-							<SellDialogContent building={selectedBuilding}/>
-							: <BuyDialogContent building={selectedBuilding}/>}
 					/>
 				} />
 			<MapContainer center={[40.347402699984606, -74.65859686137848]} zoom={17.5} scrollWheelZoom={true}>

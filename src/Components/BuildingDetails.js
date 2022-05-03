@@ -1,72 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Dialog from "./Dialogue"
-import { Auth, API, graphqlOperation } from 'aws-amplify';
-import * as mutations from '../graphql/mutations'
-import * as queries from '../graphql/queries'
-import { transferNFT } from '../blockchain/scripts/transferNFT'
-import { transferCoins } from '../blockchain/scripts/transferCoins'
+import { Auth } from 'aws-amplify'
 import { Link } from "react-router-dom";
 
-const BuildingDetails = ({ building, buying = true, dialogContent, logged}) => {
+const BuildingDetails = ({ building, buying = true, logged}) => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
+	const [userOwnsNFT, setUserOwnsNFT] = useState(false)
 	const { title, coordinates, image, price, current_owner, address, tokenID } = building
 	const etherscan_address = "https://etherscan.io/address/" + address
 
-	const handlePurchase = async () => {
-
-		// Get user and owner info
-		const userAuthInfo = await Auth.currentUserInfo()
-		const currentEmail = userAuthInfo.attributes.email
-		const existingUsers = await API.graphql(graphqlOperation(queries.listUsers))
-		const allUsers = existingUsers.data.listUsers.items
-		const userInfo = allUsers.filter(user => user.currentEmail === currentEmail)[0]
-
-		const NFTOwnerEmail = current_owner.name
-		const ownerInfo = allUsers.filter(user => user.email === NFTOwnerEmail)[0]
-
-		// Transfer coins on blockchain
-		await transferCoins(userInfo.address, ownerInfo.address, price, userInfo.privateKey)
-
-		// Transfer NFT on blockchain
-		await transferNFT(userInfo.address, ownerInfo.address, tokenID, ownerInfo.privateKey)
-
-		// Update user in database
-		const userDetails = {
-			id: userInfo.id,
-			coins: userInfo.coins - price
-		}		
-		await API.graphql({ 
-			query: mutations.updateUser, 
-			variables: {input: userDetails}
-		})
-
-		// Update owner in database
-		const ownerDetails = {
-			id: ownerInfo.id,
-			coins: ownerInfo.coins + price
-		}		
-		await API.graphql({ 
-			query: mutations.updateUser, 
-			variables: {input: ownerDetails}
-		})
-
-		// Update NFT in database
-		const existingNFTs = await API.graphql(graphqlOperation(queries.listNFTS))
-		const allNFTs = existingNFTs.data.listNFTS.items
-		const NFTInfo = allNFTs.filter(nft => nft.tokenID === tokenID)[0]
-		const NFTDetails = {
-			id: NFTInfo.id,
-			price: -1,
-			owner: userInfo.email,
-			onSale: false
-		}		
-		await API.graphql({ 
-			query: mutations.updateUser, 
-			variables: {input: NFTDetails}
-		})
-
-	}
+	useEffect(() => {
+		const fetchData = async () => {
+			let userInfo = await Auth.currentUserInfo()
+			let email = userInfo.attributes.email
+			setUserOwnsNFT(current_owner.name === email)
+		}
+		fetchData()
+	}, [current_owner.name])
 
 	return (
 		<>
@@ -93,20 +44,14 @@ const BuildingDetails = ({ building, buying = true, dialogContent, logged}) => {
 						</div> :
 						<Link to='/Login' style={{ width: "90%", maxWidth: "600px", borderRadius: 20, margin: "10px auto", lineHeight: "20px", padding: "10px", cursor: "pointer", height: 40, color: "white", backgroundColor: "rgb(32, 129, 226)" }}>Login to Purchase</Link>
 					}	
-
-
-
-					 
-					{/* { buying ? "Purchase" : "Sell"}  */}
-					
 					
 				</div>
 			</Box>
 			<Dialog
 				open={isDialogOpen}
 				setOpen={setIsDialogOpen}
-				dialogContent={dialogContent}
-				handlePurchase={handlePurchase}
+				userOwnsNFT={userOwnsNFT}
+				building={building}
 			/>
 		</>
 	)
