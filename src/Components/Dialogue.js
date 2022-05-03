@@ -11,7 +11,7 @@ import { transferNFT } from '../blockchain/scripts/transferNFT'
 import { transferCoins } from '../blockchain/scripts/transferCoins'
 
 const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
-  const { title, coordinates, image, price, current_owner, address, tokenID } = building
+  const { price, current_owner, tokenID } = building
   const [sellPrice, setSellPrice] = useState(price)
 
   const handleClose = () => {
@@ -81,7 +81,7 @@ const Dialog = ({ open, setOpen, userOwnsNFT, building }) => {
 		const existingUsers = await API.graphql(graphqlOperation(queries.listUsers))
 		const allUsers = existingUsers.data.listUsers.items
 		const userInfo = allUsers.filter(user => user.currentEmail === currentEmail)[0]
-    
+
 		// Confirm user has coins
     if (sellPrice > userInfo.coins) {
       return

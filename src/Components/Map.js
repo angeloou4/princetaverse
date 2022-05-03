@@ -7,8 +7,6 @@ import BuildingList from './BuildingList'
 import BuildingDetails from './BuildingDetails'
 import FloatingIconButton from './FloatingIconButton'
 import 'leaflet/dist/leaflet.css';
-import BuyDialogContent from "./BuyDialogContent";
-import SellDialogContent from "./SellDialogContent";
 
 import L from 'leaflet';
 

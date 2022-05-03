@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 const BuildingDetails = ({ building, buying = true, logged}) => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const [userOwnsNFT, setUserOwnsNFT] = useState(false)
-	const { title, coordinates, image, price, current_owner, address, tokenID } = building
-	const etherscan_address = "https://etherscan.io/address/" + address
+	const { title, image, price, current_owner, address } = building
+	const etherscan_address = "https://ropsten.etherscan.io/token/" + address
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -27,9 +27,9 @@ const BuildingDetails = ({ building, buying = true, logged}) => {
 						<div style={{ textAlign: "center", width: "100%", marginBottom: 10 }}>
 							<h1 style={{ fontSize: "60px" }}>{title}</h1>
 						</div>
-						<img src={image}
+						<img src={image} alt={title}
 							style={{ objectFit: "contain", "width": "90%", "height": "400px", borderRadius: 10, marginBottom: 2 }} />
-						<div style={{ marginBottom: 5, }}><a href={etherscan_address} target="_blank">{address}</a></div>
+						<div style={{ marginBottom: 5, }}><a href={etherscan_address} target="_blank" rel="noreferrer">{address}</a></div>
 					</div>
 					{/* maybe eventually replace with link to profile page */}
 					<div style={{ textAlign: "center", width: "100%" }}>

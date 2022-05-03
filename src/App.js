@@ -31,9 +31,10 @@ function App() {
   const [logged, setLogged] = useState(false)
   const [usersNFTs, setUsersNFTs] = useState([])
   const [buildingInfo, setBuildingInfo] = useState({})
+  const [addingUser, setAddingUser] = useState(false)
 
 
-	useEffect(async () => {
+	useEffect(() => {
 		
     Auth.currentAuthenticatedUser()
 			.then(user => {
@@ -55,7 +56,7 @@ function App() {
       setBuildingInfo(newBuildingInfo)
   
     }
-    await fetchData()
+    fetchData()
 
       
 	}, []);
@@ -149,11 +150,13 @@ function App() {
           case 'signUp':
               setLogged(true)
 
+              if (addingUser) return
+              setAddingUser(true)
+
               // Don't run if user exists
-              userInfo = await Auth.currentUserInfo()
-              email = userInfo.attributes.email
-              const existingUsers = await API.graphql(graphqlOperation(queries.listUsers))
-              const allUsers = existingUsers.data.listUsers.items
+              email = data.payload.data.user.username
+              let existingUsers = await API.graphql(graphqlOperation(queries.listUsers))
+              let allUsers = existingUsers.data.listUsers.items
               const sameUsers = allUsers.filter(user => user.email === email)
               if (sameUsers.length > 0) return
               
@@ -162,7 +165,7 @@ function App() {
               let { address, privateKey } = newAcc
               
               // Give the user coins
-              const COIN_AMOUNT = 1234
+              const COIN_AMOUNT = 1000
               mintCoins(PUBLIC_KEY2, COIN_AMOUNT, PRIVATE_KEY)
 
               // Add user to database
