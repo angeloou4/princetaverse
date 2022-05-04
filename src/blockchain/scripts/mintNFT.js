@@ -4,7 +4,7 @@ const { createAlchemyWeb3 } = require('@alch/alchemy-web3')
 const web3 = createAlchemyWeb3(API_URL)
 
 // Get contract
-const contract = require('../build/contracts/PrincetonNFT.json')
+const contract = require('../buildFolder/contracts/PrincetonNFT.json')
 const contractAddress = '0x4F4e34beAdB6568f066858f1F8335BD453e080D4' // Address of PrincetonNFT contract
 const nftContract = new web3.eth.Contract(contract.abi, contractAddress)
 

@@ -1,4 +1,4 @@
-let { API_URL, PUBLIC_KEY, PUBLIC_KEY2, PRIVATE_KEY, PRIVATE_KEY2 } = require('../secrets')
+let { API_URL, PUBLIC_KEY, PUBLIC_KEY2, PRIVATE_KEY } = require('../secrets')
 
 const { createAlchemyWeb3 } = require('@alch/alchemy-web3')
 const web3 = createAlchemyWeb3(API_URL)
@@ -6,7 +6,7 @@ const web3 = createAlchemyWeb3(API_URL)
 const mintCoins = async (to, coinAmount, privateKey) => {
 
   // Get Princeton Coin contract
-  const coinJson = require('../build/contracts/PrincetonCoin.json')
+  const coinJson = require('../buildFolder/contracts/PrincetonCoin.json')
   const coinContractAddress = '0x1D2DBA1203E20EBc9425ef263ACBe0FcD109b244' // Address of PrincetonCoin contract
   const coinContract = new web3.eth.Contract(coinJson.abi, coinContractAddress)
 
